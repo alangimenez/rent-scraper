@@ -14,4 +14,17 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/filteredByPricePropertyType', async (req, res) => {
+    try {
+        const lowerPrice = BaseController.retrieveLowerPrice(req)
+        const upperPrice = BaseController.retrieveUpperPrice(req)
+        const propertyType = BaseController.retrievePropertyType(req)
+
+        const result = await RetrieveProperties.retrieveByPrice(lowerPrice, upperPrice, propertyType);
+        res.status(200).json(result)
+    } catch (e) {
+        res.status(500).json(e.message)
+    }
+})
+
 module.exports = router

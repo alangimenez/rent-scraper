@@ -17,6 +17,15 @@ class PropertiesMongo extends CrudMongo {
             }
         })
     }
+
+    async getByPriceAndPropertyType(lowerPrice, upperPrice, propertyType) {
+        return await this.model.find({ 
+            $and: [
+                { price: { $gte: lowerPrice, $lte: upperPrice } },
+                { type: propertyType }
+            ]
+        }).sort({ price: 1 })
+    }
 }
 
 const PropertiesMongoInstance = new PropertiesMongo()

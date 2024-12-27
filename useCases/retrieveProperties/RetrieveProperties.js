@@ -14,6 +14,10 @@ class RetrieveProperties {
         return PropertiesMongo.getByCreatedDate(year, month, day)
     }
 
+    retrieveByPrice(lowerPrice, upperPrice, propertyType) {
+        return PropertiesMongo.getByPriceAndPropertyType(lowerPrice, upperPrice, propertyType)
+    }
+
     #createDateInUtc(date) {
         // Asegurarse que la cadena de entrada tenga el formato correcto
         const dateParts = date.split('-');

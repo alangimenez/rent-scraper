@@ -44,6 +44,26 @@ class BaseController {
 
         return createdDate
     }
+
+    retrieveLowerPrice(req) {
+        const lowerPrice = req.query.lowerPrice
+
+        if(isNaN(lowerPrice)) {
+            throw new Error("The param lowerPrice is not a number")
+        }
+
+        return lowerPrice
+    }
+
+    retrieveUpperPrice(req) {
+        const upperPrice = req.query.upperPrice
+
+        if(isNaN(upperPrice)) {
+            throw new Error("The param upperPrice is not a number")
+        }
+
+        return upperPrice
+    }
 }
 
 const baseControllerInstance = new BaseController()
