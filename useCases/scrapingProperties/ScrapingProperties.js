@@ -1,14 +1,14 @@
 const realState = require('../../enums/RealStates')
-const operation = require('../../enums/Operations')
-const propertyType = require('../../enums/PropertyType')
 const ICarlucciScraper = require('./impl/ICarlucciScraper')
+const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
 
 class ScrapingProperties {
     constructor() {}
 
-    async scrapeProperties(realStateName) {
+    async scrapeProperties(realStateName, propertyType, operation) {
         const scraper = this.#getRealStateScraper(realStateName)
-        const properties = await scraper.scrape()
+        const urlObjective = UrlObjectiveDecisor.getUrlObjective(realStateName, operation, propertyType)
+        const properties = await scraper.scrape(urlObjective)
 
         return properties
     }

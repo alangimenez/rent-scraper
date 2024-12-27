@@ -6,7 +6,7 @@ const propertyType = require('../../../enums/PropertyType')
 class ICarlucciScraper {
     constructor() {}
 
-    async scrape() {
+    async scrape(urlObjective) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
     
@@ -14,7 +14,7 @@ class ICarlucciScraper {
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
     
         // Navegar a la página objetivo
-        await page.goto('https://icarlucci.com.ar/propiedades/casas/venta?page=1', { waitUntil: 'domcontentloaded' });
+        await page.goto(`${urlObjective}page=1`, { waitUntil: 'domcontentloaded' });
     
         // Evaluar el contenido de la página para extraer el valor deseado
         const result = await page.evaluate(() => {
@@ -22,16 +22,16 @@ class ICarlucciScraper {
             const container = document.querySelector('div.col-md-9 nav ul');
     
             // Verificar si existe el contenedor y obtener todos los li.page-item
-            if (!container) return null;
+            if (!container) return 1;
             const listItems = container.querySelectorAll('li.page-item');
     
             // Acceder a la antepenúltima etiqueta li
             const targetItem = listItems[listItems.length - 2];
-            if (!targetItem) return null;
+            if (!targetItem) return 1;
     
             // Extraer el texto del enlace dentro de la antepenúltima li
             const link = targetItem.querySelector('a');
-            return link ? link.innerText.trim() : null;
+            return link ? link.innerText.trim() : 1;
         });
     
         // Imprimir el resultado
@@ -40,8 +40,7 @@ class ICarlucciScraper {
         let dataList = []
     
         for (let i = 1; i <= result; i++) {
-            dataList = [...dataList, ...await this.#scrapeDynamicWebsite(i, browser)]
-            i++
+            dataList = [...dataList, ...await this.#scrapeDynamicWebsite(i, browser, urlObjective)]
         }
     
         await browser.close();
@@ -49,13 +48,13 @@ class ICarlucciScraper {
         return dataList
     }
 
-    async #scrapeDynamicWebsite(pageId, browser) {
+    async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
         const page = await browser.newPage();
     
         // Configurar User-Agent
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
     
-        await page.goto('https://icarlucci.com.ar/propiedades/casas/venta?page=' + pageId);
+        await page.goto(`${urlObjective}page=${pageId}`);
     
         // Evaluar el contenido de la página y extraer ambos datos
         const dataList = await page.evaluate(() => {
@@ -87,12 +86,6 @@ class ICarlucciScraper {
                     pictureSrc: pictureValue.src,
                 };
             });
-        });
-
-        dataList.forEach(e => {
-            e.type = propertyType.House,
-            e.realState = realState.ICarlucci,
-            e.operation = operation.Sale
         });
     
         return dataList
