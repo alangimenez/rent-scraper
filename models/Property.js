@@ -13,7 +13,8 @@ const propertySchema = new Schema ({
     pictureSrc: {type: String},
     realState: {type: String},
     operation: {type: String},
-    currency: {type: String}
+    currency: {type: String},
+    address: {type: String}
 })
 
 const Property = mongoose.model(coleccion, propertySchema);

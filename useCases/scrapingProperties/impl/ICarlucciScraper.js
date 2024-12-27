@@ -1,7 +1,4 @@
 const puppeteer = require('puppeteer');
-const realState = require('../../../enums/RealStates')
-const operation = require('../../../enums/Operations')
-const propertyType = require('../../../enums/PropertyType')
 
 class ICarlucciScraper {
     constructor() {}
@@ -76,6 +73,8 @@ class ICarlucciScraper {
                 const urlValue = div.querySelector('div.col-7.col-md-6.d-block.d-md-none.text-right.text-md-left a')?.href
 
                 const pictureValue = div.querySelector('img')
+
+                const address = div.querySelector('p.address-to-show')?.innerText.trim() || null
     
                 // Devolver ambos valores como un objeto
                 return {
@@ -84,6 +83,7 @@ class ICarlucciScraper {
                     id: thirdValue,
                     url: urlValue,
                     pictureSrc: pictureValue.src,
+                    address: address
                 };
             });
         });
