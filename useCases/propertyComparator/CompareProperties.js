@@ -1,14 +1,33 @@
 const PropertiesMongo = require('../../repositories/mongoDb/PropertiesMongo')
 
 class CompareProperties {
-    constructor() {}
+    constructor() { }
 
     async compare(allProperties) {
         const savedProperties = await PropertiesMongo.getAll()
 
-        const savedPropertiesSet = new Set(savedProperties.map(obj => obj.id))
+        return this.#mergeUniqueLists(savedProperties, allProperties)
+    }
 
-        return allProperties.filter(obj => !savedPropertiesSet.has(obj.id))
+    #mergeUniqueLists(listOne, listTwo) {
+        // Crear un conjunto para rastrear combinaciones únicas de operacion e id
+        const seen = new Set();
+        let listWithoutDuplicates = []
+
+        listOne.forEach(e => {
+            const detailedId = `${e.id}-${e.operation}`
+            seen.add(detailedId)
+        });
+
+        listTwo.forEach(e => {
+            const detailedId = `${e.id}-${e.operation}`
+            if (!seen.has(detailedId)) {
+                seen.add(detailedId)
+                listWithoutDuplicates = [...listWithoutDuplicates, e]
+            } 
+        });
+
+        return listWithoutDuplicates
     }
 }
 

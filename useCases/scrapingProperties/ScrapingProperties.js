@@ -16,7 +16,6 @@ class ScrapingProperties {
 
     #getRealStateScraper(realStateName) {
         let scraper;
-        console.log(`realStateName: ${realStateName}`)
 
         switch(realStateName) {
             case realState.ICarlucci:

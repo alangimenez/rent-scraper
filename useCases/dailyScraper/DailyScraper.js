@@ -12,18 +12,29 @@ class DailyScraper {
         const newProperties = await CompareProperties.compare(allProperties)
         const decoratedProperties = PropertyDecorator.decorate(newProperties, realState, operation, propertyType)
         await SaveProperties.saveProperties(decoratedProperties)
+        return {
+            addedProperties: decoratedProperties.length
+        }
     }
 
     async launchPropertyProcess() {
         CasesForScraping.forEach(async e => {
             try {
-                await this.handlePropertyProcess(e.realState, e.propertyType, e.operation)
-                console.log(`Real state: ${e.realState}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK`)
+                const quantityAddedProperties = await this.handlePropertyProcess(e.realState, e.propertyType, e.operation)
+                console.log(`Real state: ${e.realState}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK, added: ${quantityAddedProperties.addedProperties}`)
             } catch (e) {
                 console.log(`Real state: ${e.realState}, propertyType: ${e.propertyType}, operation: ${e.operation}, status ERROR`)
             }
         })
         return
+    }
+
+    async checkSpecificScraper(realState, propertyType, operation) {
+        const allProperties = await ScrapingProperties.scrapeProperties(realState, propertyType, operation)
+        return {
+            total: allProperties.length,
+            properties: allProperties
+        }
     }
 }
 

@@ -10,10 +10,24 @@ class NerinaAlloScraper {
         // Configurar User-Agent para evitar bloqueos
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
+        let propertiesList = []
+
+        let validator = true
+        let pageId = 2
+
+        while (validator) {
+            const propertiesToAdd = await this.#scrapeDynamicWebsite(pageId, browser, urlObjective)
+            propertiesList = [...propertiesList, ...propertiesToAdd]
+            if (propertiesToAdd.length == 0) {
+                validator = false
+            }
+            pageId++
+        }
+
         // Navegar a la página objetivo
         await page.goto(`${urlObjective}p=1`, { waitUntil: 'domcontentloaded' });
 
-        let propertiesList = await page.$$eval('#propiedades li', (lis) => {
+        let latestProperties = await page.$$eval('#propiedades li', (lis) => {
             return lis.map(li => {
                 const propDescTipoUb = li.querySelector('.prop-desc-tipo-ub').textContent;
                 const propValorNro = li.querySelector('.prop-valor-nro').textContent;
@@ -33,27 +47,19 @@ class NerinaAlloScraper {
             });
         });
 
-        propertiesList.forEach(e => {
+        latestProperties.forEach(e => {
             const priceArray = e.price.split('\n')
             const unformattedPrice = priceArray[1].replaceAll("    ", "")
             e.price = unformattedPrice
         })
 
-        let validator = true
-        let pageId = 2
-
-        while (validator) {
-            const propertiesToAdd = await this.#scrapeDynamicWebsite(pageId, browser, urlObjective)
-            propertiesList = [...propertiesList, ...propertiesToAdd]
-            if (propertiesToAdd.length == 0) {
-                validator = false
-            }
-            pageId++
-        }
+        propertiesList = [...propertiesList, ...latestProperties]
 
         await browser.close();
 
-        return propertiesList
+        const listWithoutDuplicates = this.#removeDuplicated(propertiesList)
+
+        return listWithoutDuplicates
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
@@ -96,6 +102,10 @@ class NerinaAlloScraper {
         })
 
         return data
+    }
+
+    #removeDuplicated(list) {
+        return Array.from(new Set(list.map(JSON.stringify))).map(JSON.parse);
     }
 }
 
