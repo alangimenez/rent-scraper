@@ -27,4 +27,22 @@ router.post('/', async (req, res) => {
     res.status(201).json()
 })
 
+router.post('/all', async (req, res) => {
+    try {
+        await DailyScraper.launchPropertyProcess();
+        res.status(201).json()
+    } catch (e) {
+        let error = {
+            message: e.message,
+            type: e.name
+        }
+
+        if (Configs.DEBUG_MODE == "true") {
+            error.stack = e.stack
+        }
+
+        res.status(500).json(error)
+    }
+})
+
 module.exports = router
