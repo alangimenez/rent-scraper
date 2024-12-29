@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 class ICarlucciScraper {
     constructor() {}
 
-    async scrape(urlObjective) {
+    async scrape(objective) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
     
@@ -11,7 +11,7 @@ class ICarlucciScraper {
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
     
         // Navegar a la página objetivo
-        await page.goto(`${urlObjective}page=1`, { waitUntil: 'domcontentloaded' });
+        await page.goto(`${objective.url}page=1`, { waitUntil: 'domcontentloaded' });
     
         // Evaluar el contenido de la página para extraer el valor deseado
         const result = await page.evaluate(() => {
@@ -37,8 +37,12 @@ class ICarlucciScraper {
         let dataList = []
     
         for (let i = 1; i <= result; i++) {
-            dataList = [...dataList, ...await this.#scrapeDynamicWebsite(i, browser, urlObjective)]
+            dataList = [...dataList, ...await this.#scrapeDynamicWebsite(i, browser, objective.url)]
         }
+
+        dataList.forEach(e => {
+            e.city = objective.id
+        })
     
         await browser.close();
     

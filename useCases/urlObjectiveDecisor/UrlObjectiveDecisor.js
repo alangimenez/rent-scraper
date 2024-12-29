@@ -1,6 +1,7 @@
 const RealStates = require('../../enums/RealStates')
 const PropertyType = require('../../enums/PropertyType')
 const Operations = require('../../enums/Operations')
+const Cities = require('../../enums/Cities')
 
 class UrlObjectiveDecisor {
     constructor() {}
@@ -11,22 +12,88 @@ class UrlObjectiveDecisor {
 
         switch (searchedCase) {
             case `${RealStates.ICarlucci}-${PropertyType.House}-${Operations.Sale}`:
-                urlObjective = "https://icarlucci.com.ar/propiedades/casas/venta?"
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://icarlucci.com.ar/propiedades/casas/venta/Argentina-Bs.As.+G.B.A.+Zona+Oeste-Mor%C3%B3n?order=1&"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://icarlucci.com.ar/propiedades/casas/venta/Argentina-Bs.As.+G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                    }
+                ]
                 break
             case `${RealStates.ICarlucci}-${PropertyType.House}-${Operations.Rent}`:
-                urlObjective = "https://icarlucci.com.ar/propiedades/casas/alquileres?"
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://icarlucci.com.ar/propiedades/casas/alquileres/Argentina-Bs.As.+G.B.A.+Zona+Oeste-Mor%C3%B3n?order=1&"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://icarlucci.com.ar/propiedades/casas/alquileres/Argentina-Bs.As.+G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                    }
+                ]
                 break
             case `${RealStates.ICarlucci}-${PropertyType.Field}-${Operations.Sale}`:
-                urlObjective = "https://icarlucci.com.ar/propiedades/terrenos+o+lotes/venta?"
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://icarlucci.com.ar/propiedades/terrenos+o+lotes/venta/Argentina-Bs.As.+G.B.A.+Zona+Oeste-Mor%C3%B3n?order=1&"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://icarlucci.com.ar/propiedades/terrenos+o+lotes/venta/Argentina-Bs.As.+G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                    }
+                ]
                 break
             case `${RealStates.NerinaAllo}-${PropertyType.House}-${Operations.Sale}`:
-                urlObjective = "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=&location_type=&ptypes=3&o=2,2&watermark=&"
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=26315&location_type=&ptypes=3&o=2,2&watermark=&"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=25983&location_type=&ptypes=3&o=2,2&watermark=&"
+                    },
+                    {
+                        id: Cities.Haedo,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=26321&location_type=&ptypes=3&o=2,2&watermark=&"
+                    }
+                ]
                 break
             case `${RealStates.NerinaAllo}-${PropertyType.Field}-${Operations.Sale}`:
-                urlObjective = "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=&location_type=&ptypes=1&o=2,2&watermark=&"
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=26315&location_type=&ptypes=1&o=2,2&watermark=&"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=25983&location_type=&ptypes=1&o=2,2&watermark=&"
+                    },
+                    {
+                        id: Cities.Haedo,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=1&locations=26321&location_type=&ptypes=1&o=2,2&watermark=&"
+                    }
+                ]
                 break
             case `${RealStates.NerinaAllo}-${PropertyType.House}-${Operations.Rent}`:
-                urlObjective = "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=2&locations=&location_type=&ptypes=3&o=2,2&watermark=&"
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=2&locations=26315&location_type=&ptypes=3&o=2,2&watermark=&"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=2&locations=25983&location_type=&ptypes=3&o=2,2&watermark=&"
+                    },
+                    {
+                        id: Cities.Haedo,
+                        url: "https://www.allopropiedades.com.ar/Buscar?q=&currency=ANY&min-price=&max-price=&min-roofed=&max-roofed=&min-surface=&max-surface=&min-total_surface=&max-total_surface=&min-front_measure=&max-front_measure=&min-depth_measure=&max-depth_measure=&age=&min-age=&max-age=&suites=&rooms=&tags=&operation=2&locations=26321&location_type=&ptypes=3&o=2,2&watermark=&"
+                    }
+                ]
                 break
             default: 
                 throw new Error(`urlObjective not implemented for real state ${realState}, operation ${operation}, property type ${propertyType}`)

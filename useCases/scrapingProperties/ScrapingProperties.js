@@ -8,10 +8,17 @@ class ScrapingProperties {
 
     async scrapeProperties(realStateName, propertyType, operation) {
         const scraper = this.#getRealStateScraper(realStateName)
-        const urlObjective = UrlObjectiveDecisor.getUrlObjective(realStateName, operation, propertyType)
-        const properties = await scraper.scrape(urlObjective)
+        const urlObjectives = UrlObjectiveDecisor.getUrlObjective(realStateName, operation, propertyType)
 
-        return properties
+        let propertyList = []
+        
+        for (const e of urlObjectives) {
+            const properties = await scraper.scrape(e)
+            console.log(`properties quantity: ${properties.length}`)
+            propertyList = [...propertyList, ...properties]
+        }
+
+        return propertyList
     }
 
     #getRealStateScraper(realStateName) {

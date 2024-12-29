@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 class NerinaAlloScraper {
     constructor() { }
 
-    async scrape(urlObjective) {
+    async scrape(objective) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
@@ -16,7 +16,7 @@ class NerinaAlloScraper {
         let pageId = 2
 
         while (validator) {
-            const propertiesToAdd = await this.#scrapeDynamicWebsite(pageId, browser, urlObjective)
+            const propertiesToAdd = await this.#scrapeDynamicWebsite(pageId, browser, objective.url)
             propertiesList = [...propertiesList, ...propertiesToAdd]
             if (propertiesToAdd.length == 0) {
                 validator = false
@@ -25,7 +25,7 @@ class NerinaAlloScraper {
         }
 
         // Navegar a la página objetivo
-        await page.goto(`${urlObjective}p=1`, { waitUntil: 'domcontentloaded' });
+        await page.goto(`${objective.url}p=1`, { waitUntil: 'domcontentloaded' });
 
         let latestProperties = await page.$$eval('#propiedades li', (lis) => {
             return lis.map(li => {
@@ -58,6 +58,10 @@ class NerinaAlloScraper {
         await browser.close();
 
         const listWithoutDuplicates = this.#removeDuplicated(propertiesList)
+
+        listWithoutDuplicates.forEach(e => {
+            e.city = objective.id
+        })
 
         return listWithoutDuplicates
     }

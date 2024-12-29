@@ -14,7 +14,8 @@ const propertySchema = new Schema ({
     realState: {type: String},
     operation: {type: String},
     currency: {type: String},
-    address: {type: String}
+    address: {type: String},
+    city: {type: String}
 })
 
 const Property = mongoose.model(coleccion, propertySchema);
