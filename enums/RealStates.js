@@ -1,4 +1,5 @@
 module.exports = {
     ICarlucci: "ICarlucci",
-    NerinaAllo: "NerinaAllo"
+    NerinaAllo: "NerinaAllo",
+    VeronicaEspinosa: "VeronicaEspinosa"
 }

@@ -14,7 +14,6 @@ class ScrapingProperties {
         
         for (const e of urlObjectives) {
             const properties = await scraper.scrape(e)
-            console.log(`properties quantity: ${properties.length}`)
             propertyList = [...propertyList, ...properties]
         }
 
@@ -29,6 +28,9 @@ class ScrapingProperties {
                 scraper = ICarlucciScraper
                 break
             case realState.NerinaAllo:
+                scraper = NerinaAlloScraper
+                break
+            case realState.VeronicaEspinosa:
                 scraper = NerinaAlloScraper
                 break
             default:

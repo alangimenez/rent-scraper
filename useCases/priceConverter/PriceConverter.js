@@ -20,6 +20,9 @@ class PriceConverter {
             case realState.NerinaAllo:
                 converter = nerinaAlloPriceConverter
                 break
+            case realState.VeronicaEspinosa:
+                converter = nerinaAlloPriceConverter
+                break
             default:
                 throw new Error("Converter case not implemented")
         }
