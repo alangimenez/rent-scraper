@@ -3,5 +3,6 @@ module.exports = {
     NerinaAllo: "NerinaAllo",
     VeronicaEspinosa: "VeronicaEspinosa",
     MarceloMilano: "MarceloMilano",
-    Urrutia: "Urrutia"
+    Urrutia: "Urrutia",
+    Oyhanarte: "Oyhanarte"
 }
