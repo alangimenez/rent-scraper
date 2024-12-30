@@ -36,6 +36,9 @@ class ScrapingProperties {
             case realState.MarceloMilano:
                 scraper = NerinaAlloScraper
                 break
+            case realState.Urrutia:
+                scraper = NerinaAlloScraper
+                break
             default:
                 throw new Error("Scraper case not implemented")
         }
