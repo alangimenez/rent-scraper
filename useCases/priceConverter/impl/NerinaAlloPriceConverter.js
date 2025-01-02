@@ -6,6 +6,10 @@ class NerinaAlloPriceConverter {
     convert(currency, price) {
         let formattedPrice
 
+        if (!this.#checkIfPriceExist(price)) {
+            return 0
+        }
+
         if (currency == Currency.Usd) {
             formattedPrice = this.#convertFromUsd(price)
         } else {
@@ -27,6 +31,12 @@ class NerinaAlloPriceConverter {
         const secondStep = firstStep.replaceAll(" ", "")
         const formattedPrice = secondStep.replaceAll(".", "")
         return formattedPrice
+    }
+
+    #checkIfPriceExist(price) {
+        if (!price.includes("Consulte") || !price.includes("precio")) {
+            return true
+        }
     }
 }
 

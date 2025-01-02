@@ -29,7 +29,8 @@ class CrudMongo {
         try {
             return await this.model.create(element);
         } catch (e) {
-            console.log("cant upload element")
+            console.log(`Can't upload element: ${element.id}`)
+            console.log(element)
         }
     }
 
