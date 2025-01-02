@@ -2,6 +2,7 @@ const realState = require('../../enums/RealStates')
 const ICarlucciScraper = require('./impl/ICarlucciScraper')
 const NerinaAlloScraper = require('./impl/NerinaAlloScraper')
 const DeAngelisScraper = require('./impl/DeAngelisScraper')
+const UrrutiaScraper = require('./impl/UrrutiaScraper')
 const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
 
 class ScrapingProperties {
@@ -38,7 +39,7 @@ class ScrapingProperties {
                 scraper = NerinaAlloScraper
                 break
             case realState.Urrutia:
-                scraper = NerinaAlloScraper
+                scraper = UrrutiaScraper
                 break
             case realState.Oyhanarte:
                 scraper = NerinaAlloScraper

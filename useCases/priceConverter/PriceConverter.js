@@ -1,5 +1,6 @@
 const ICarlucciPriceConverter = require('./impl/ICarlucciPriceConverter')
 const nerinaAlloPriceConverter = require('./impl/NerinaAlloPriceConverter')
+const uriartePriceConverter = require('./impl/UriartePriceConverter')
 const realState = require('../../enums/RealStates')
 
 class PriceConverter {
@@ -27,7 +28,7 @@ class PriceConverter {
                 converter = nerinaAlloPriceConverter
                 break
             case realState.Urrutia:
-                converter = nerinaAlloPriceConverter
+                converter = uriartePriceConverter
                 break
             case realState.Oyhanarte:
                 converter = nerinaAlloPriceConverter
