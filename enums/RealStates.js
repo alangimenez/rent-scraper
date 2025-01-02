@@ -4,5 +4,6 @@ module.exports = {
     VeronicaEspinosa: "VeronicaEspinosa",
     MarceloMilano: "MarceloMilano",
     Urrutia: "Urrutia",
-    Oyhanarte: "Oyhanarte"
+    Oyhanarte: "Oyhanarte",
+    DeAngelis: "DeAngelis"
 }
