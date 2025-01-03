@@ -35,6 +35,9 @@ class RetrieveCurrency {
             case realState.DeAngelis:
                 retriever = nerinaAlloCurrencyRetriever
                 break
+            case realState.SarroPucheta:
+                retriever = nerinaAlloCurrencyRetriever
+                break
             default:
                 throw new Error("Currency retriever case not implemented")
         }

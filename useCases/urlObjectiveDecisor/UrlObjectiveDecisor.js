@@ -275,6 +275,42 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
+                case `${RealStates.SarroPucheta}-${PropertyType.House}-${Operations.Sale}`:
+                    urlObjective = [
+                        {
+                            id: Cities.Moron,
+                            url: "https://sarropucheta.com/propiedades/casas/venta/Argentina-G.B.A.+Zona+Oeste-Moron?order=1&"
+                        },
+                        {
+                            id: Cities.Ituzaingo,
+                            url: "https://sarropucheta.com/propiedades/casas/venta/Argentina-G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                        }
+                    ]
+                    break
+                case `${RealStates.SarroPucheta}-${PropertyType.Field}-${Operations.Sale}`:
+                    urlObjective = [
+                        {
+                            id: Cities.Moron,
+                            url: "https://sarropucheta.com/propiedades/terrenos+o+lotes/venta/Argentina-G.B.A.+Zona+Oeste-Moron?order=1&"
+                        },
+                        {
+                            id: Cities.Ituzaingo,
+                            url: "https://sarropucheta.com/propiedades/terrenos+o+lotes/venta/Argentina-G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                        }
+                    ]
+                    break
+                case `${RealStates.SarroPucheta}-${PropertyType.House}-${Operations.Rent}`:
+                    urlObjective = [
+                        {
+                            id: Cities.Moron,
+                            url: "https://sarropucheta.com/propiedades/casas/alquileres-y-alquileres+temporales/Argentina-G.B.A.+Zona+Oeste-Moron?order=1&"
+                        },
+                        {
+                            id: Cities.Ituzaingo,
+                            url: "https://sarropucheta.com/propiedades/casas/alquileres-y-alquileres+temporales/Argentina-G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                        }
+                    ]
+                    break
             default: 
                 throw new Error(`urlObjective not implemented for real state ${realState}, operation ${operation}, property type ${propertyType}`)
         }

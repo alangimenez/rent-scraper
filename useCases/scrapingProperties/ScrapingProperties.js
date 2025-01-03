@@ -3,6 +3,7 @@ const ICarlucciScraper = require('./impl/ICarlucciScraper')
 const NerinaAlloScraper = require('./impl/NerinaAlloScraper')
 const DeAngelisScraper = require('./impl/DeAngelisScraper')
 const UrrutiaScraper = require('./impl/UrrutiaScraper')
+const sarroPucheta = require('./impl/SarroPuchetaScraper')
 const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
 
 class ScrapingProperties {
@@ -46,6 +47,9 @@ class ScrapingProperties {
                 break
             case realState.DeAngelis:
                 scraper = DeAngelisScraper
+                break
+            case realState.SarroPucheta:
+                scraper = sarroPucheta
                 break
             default:
                 throw new Error("Scraper case not implemented")

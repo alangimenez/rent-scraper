@@ -25,4 +25,7 @@ module.exports = [
     new ScrapingCase(RealStates.DeAngelis, Operations.Sale, PropertyType.House),
     new ScrapingCase(RealStates.DeAngelis, Operations.Sale, PropertyType.Field),
     new ScrapingCase(RealStates.DeAngelis, Operations.Rent, PropertyType.House),
+    new ScrapingCase(RealStates.SarroPucheta, Operations.Sale, PropertyType.House),
+    new ScrapingCase(RealStates.SarroPucheta, Operations.Sale, PropertyType.Field),
+    new ScrapingCase(RealStates.SarroPucheta, Operations.Rent, PropertyType.House),
 ]
