@@ -9,7 +9,7 @@ class DailyScraper {
 
     async handlePropertyProcess(realState, propertyType, operation) {
         const allProperties = await ScrapingProperties.scrapeProperties(realState, propertyType, operation)
-        const newProperties = await CompareProperties.compare(allProperties)
+        const newProperties = await CompareProperties.compare(allProperties, operation)
         const decoratedProperties = PropertyDecorator.decorate(newProperties, realState, operation, propertyType)
         await SaveProperties.saveProperties(decoratedProperties)
         return {
