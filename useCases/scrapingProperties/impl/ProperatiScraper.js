@@ -4,18 +4,16 @@ class ProperatiScraper {
     constructor() { }
 
     async scrape(objective) {
+        console.log(`Inició scraping para la ciudad ${objective.id}`)
+
         const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-
-        // Configurar User-Agent para evitar bloqueos
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
-
+        
         let iteration = 1
         let previousPageHasContent = true
         let propertyList = []
         
         do {
-            const propertiesToAdd = await this.#scraperWebsite(iteration, page, objective.url)
+            const propertiesToAdd = await this.#scraperWebsite(iteration, browser, objective.url)
             propertyList = [...propertyList, ...propertiesToAdd]
             if (propertiesToAdd.length == 0) {
                 previousPageHasContent = false
@@ -29,15 +27,20 @@ class ProperatiScraper {
 
         const propertiesWithoutNulls = propertyList.filter(property => property.id !== null)
             
-        console.log(propertiesWithoutNulls.length);
+        console.log(`Finalizó scraping para la ciudad ${objective.id}. Se relevaron ${propertiesWithoutNulls.length} propiedades`);
 
         await browser.close();
 
         return propertiesWithoutNulls
     }
 
-    async #scraperWebsite(pageId, page, url) {
+    async #scraperWebsite(pageId, browser, url) {
         console.log(`Analizando pagina ${pageId}`)
+
+        const page = await browser.newPage();
+
+        // Configurar User-Agent para evitar bloqueos
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
         // Navegar a la página objetivo
         await page.goto(`${url}${pageId}`, { waitUntil: 'domcontentloaded' });

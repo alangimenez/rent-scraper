@@ -316,11 +316,19 @@ class UrlObjectiveDecisor {
                         {
                             id: Cities.Moron,
                             url: "https://www.properati.com.ar/s/moron/casa/venta/"
-                        }/* ,
+                        },
                         {
                             id: Cities.Ituzaingo,
-                            url: "https://sarropucheta.com/propiedades/casas/alquileres-y-alquileres+temporales/Argentina-G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
-                        } */
+                            url: "https://www.properati.com.ar/s/ituzaingo/casa/venta/"
+                        },
+                        {
+                            id: Cities.Castelar,
+                            url: "https://www.properati.com.ar/s/castelar-moron/casa/venta/"
+                        },
+                        {
+                            id: Cities.Haedo,
+                            url: "https://www.properati.com.ar/s/haedo/casa/venta/"
+                        }
                     ]
                     break
             default: 
