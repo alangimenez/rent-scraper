@@ -10,8 +10,37 @@ class ProperatiScraper {
         // Configurar User-Agent para evitar bloqueos
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
+        let iteration = 1
+        let previousPageHasContent = true
+        let propertyList = []
+        
+        do {
+            const propertiesToAdd = await this.#scraperWebsite(iteration, page, objective.url)
+            propertyList = [...propertyList, ...propertiesToAdd]
+            if (propertiesToAdd.length == 0) {
+                previousPageHasContent = false
+            }
+            iteration++
+        } while (previousPageHasContent)
+
+        propertyList.forEach(p => {
+            p.city = objective.id
+        })
+
+        const propertiesWithoutNulls = propertyList.filter(property => property.id !== null)
+            
+        console.log(propertiesWithoutNulls.length);
+
+        await browser.close();
+
+        return propertiesWithoutNulls
+    }
+
+    async #scraperWebsite(pageId, page, url) {
+        console.log(`Analizando pagina ${pageId}`)
+
         // Navegar a la página objetivo
-        await page.goto(`${objective.url}1`, { waitUntil: 'domcontentloaded' });
+        await page.goto(`${url}${pageId}`, { waitUntil: 'domcontentloaded' });
 
         const extractListings = async () => {
             return await page.evaluate(() => {
@@ -42,50 +71,38 @@ class ProperatiScraper {
 
                     // Href del <a>
                     const href = link.getAttribute('href');
+                    const completeHref = `https://www.properati.com.ar${href}`
 
                     // Atributo data-idanuncio
                     const listingCardDiv = link.querySelector('div.listing.listing-card');
                     const dataIdAnuncio = listingCardDiv ? listingCardDiv.getAttribute('data-idanuncio') : null;
 
-
-
                     return {
-                        imgSrc,
-                        title,
-                        price,
-                        href,
-                        dataIdAnuncio
+                        pictureSrc: imgSrc,
+                        title: title,
+                        price: price,
+                        url: completeHref,
+                        id: dataIdAnuncio,
+                        address: ''
                     };
                 });
             });
         };
 
-        const listings = await extractListings();
+        let listings
 
-        console.log(listings);
+        try {
+            listings = await extractListings();
+        } catch (error) {
+            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            console.log(error.message)
+            listings = []
+        }
 
-        await browser.close();
+        console.log(`Se obtuvieron ${listings.length} nuevas propiedades`)
 
-        return []
+        return listings
     }
-
-
-
-    /* #removeDuplicated(list) {
-        return Array.from(new Set(list.map(JSON.stringify))).map(JSON.parse);
-    }
-
-    #removeDuplicatedById(list) {
-        const seen = new Set();
-        return list.filter(item => {
-            if (seen.has(item.id)) {
-                return false; // Si ya existe, lo omite
-            } else {
-                seen.add(item.id); // Agrega al conjunto de IDs vistos
-                return true; // Mantiene el primero que encuentra
-            }
-        });
-    } */
 }
 
 const properatiScraperInstance = new ProperatiScraper()
