@@ -311,6 +311,18 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
+                case `${RealStates.Properati}-${PropertyType.House}-${Operations.Sale}`:
+                    urlObjective = [
+                        {
+                            id: Cities.Moron,
+                            url: "https://www.properati.com.ar/s/moron/casa/venta/"
+                        }/* ,
+                        {
+                            id: Cities.Ituzaingo,
+                            url: "https://sarropucheta.com/propiedades/casas/alquileres-y-alquileres+temporales/Argentina-G.B.A.+Zona+Oeste-Ituzaing%C3%B3?order=1&"
+                        } */
+                    ]
+                    break
             default: 
                 throw new Error(`urlObjective not implemented for real state ${realState}, operation ${operation}, property type ${propertyType}`)
         }
