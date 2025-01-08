@@ -11,7 +11,7 @@ class UrlObjectiveDecisor {
         let urlObjective;
 
         switch (searchedCase) {
-            case `${RealStates.ICarlucci}-${PropertyType.House}-${Operations.Sale}`:
+            case `${RealStates.ICarlucci.id}-${PropertyType.House}-${Operations.Sale}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
@@ -23,7 +23,7 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
-            case `${RealStates.ICarlucci}-${PropertyType.House}-${Operations.Rent}`:
+            case `${RealStates.ICarlucci.id}-${PropertyType.House}-${Operations.Rent}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
@@ -35,7 +35,7 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
-            case `${RealStates.ICarlucci}-${PropertyType.Field}-${Operations.Sale}`:
+            case `${RealStates.ICarlucci.id}-${PropertyType.Field}-${Operations.Sale}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
@@ -47,7 +47,7 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
-            case `${RealStates.NerinaAllo}-${PropertyType.House}-${Operations.Sale}`:
+            case `${RealStates.NerinaAllo.id}-${PropertyType.House}-${Operations.Sale}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
@@ -63,7 +63,7 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
-            case `${RealStates.NerinaAllo}-${PropertyType.Field}-${Operations.Sale}`:
+            case `${RealStates.NerinaAllo.id}-${PropertyType.Field}-${Operations.Sale}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
@@ -79,7 +79,7 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
-            case `${RealStates.NerinaAllo}-${PropertyType.House}-${Operations.Rent}`:
+            case `${RealStates.NerinaAllo.id}-${PropertyType.House}-${Operations.Rent}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
@@ -95,7 +95,7 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
-                case `${RealStates.VeronicaEspinosa}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.VeronicaEspinosa.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -107,7 +107,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.VeronicaEspinosa}-${PropertyType.Field}-${Operations.Sale}`:
+                case `${RealStates.VeronicaEspinosa.id}-${PropertyType.Field}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -119,7 +119,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.VeronicaEspinosa}-${PropertyType.House}-${Operations.Rent}`:
+                case `${RealStates.VeronicaEspinosa.id}-${PropertyType.House}-${Operations.Rent}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -131,7 +131,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.MarceloMilano}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.MarceloMilano.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -143,7 +143,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.MarceloMilano}-${PropertyType.Field}-${Operations.Sale}`:
+                case `${RealStates.MarceloMilano.id}-${PropertyType.Field}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -155,7 +155,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.MarceloMilano}-${PropertyType.House}-${Operations.Rent}`:
+                case `${RealStates.MarceloMilano.id}-${PropertyType.House}-${Operations.Rent}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -167,7 +167,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Urrutia}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.Urrutia.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -179,7 +179,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Urrutia}-${PropertyType.Field}-${Operations.Sale}`:
+                case `${RealStates.Urrutia.id}-${PropertyType.Field}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -191,7 +191,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Urrutia}-${PropertyType.House}-${Operations.Rent}`:
+                case `${RealStates.Urrutia.id}-${PropertyType.House}-${Operations.Rent}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -203,7 +203,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Oyhanarte}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.Oyhanarte.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -215,7 +215,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Oyhanarte}-${PropertyType.Field}-${Operations.Sale}`:
+                case `${RealStates.Oyhanarte.id}-${PropertyType.Field}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -227,7 +227,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Oyhanarte}-${PropertyType.House}-${Operations.Rent}`:
+                case `${RealStates.Oyhanarte.id}-${PropertyType.House}-${Operations.Rent}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -239,7 +239,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.DeAngelis}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.DeAngelis.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -251,7 +251,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.DeAngelis}-${PropertyType.Field}-${Operations.Sale}`:
+                case `${RealStates.DeAngelis.id}-${PropertyType.Field}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -263,7 +263,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.DeAngelis}-${PropertyType.House}-${Operations.Rent}`:
+                case `${RealStates.DeAngelis.id}-${PropertyType.House}-${Operations.Rent}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -275,7 +275,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.SarroPucheta}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.SarroPucheta.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -287,7 +287,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.SarroPucheta}-${PropertyType.Field}-${Operations.Sale}`:
+                case `${RealStates.SarroPucheta.id}-${PropertyType.Field}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -299,7 +299,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.SarroPucheta}-${PropertyType.House}-${Operations.Rent}`:
+                case `${RealStates.SarroPucheta.id}-${PropertyType.House}-${Operations.Rent}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -311,7 +311,7 @@ class UrlObjectiveDecisor {
                         }
                     ]
                     break
-                case `${RealStates.Properati}-${PropertyType.House}-${Operations.Sale}`:
+                case `${RealStates.Properati.id}-${PropertyType.House}-${Operations.Sale}`:
                     urlObjective = [
                         {
                             id: Cities.Moron,
@@ -328,6 +328,46 @@ class UrlObjectiveDecisor {
                         {
                             id: Cities.Haedo,
                             url: "https://www.properati.com.ar/s/haedo/casa/venta/"
+                        }
+                    ]
+                    break
+                case `${RealStates.Properati.id}-${PropertyType.House}-${Operations.Rent}`:
+                    urlObjective = [
+                        {
+                            id: Cities.Moron,
+                            url: "https://www.properati.com.ar/s/moron/casa/alquiler/"
+                        },
+                        {
+                            id: Cities.Ituzaingo,
+                            url: "https://www.properati.com.ar/s/ituzaingo/casa/alquiler/"
+                        },
+                        {
+                            id: Cities.Castelar,
+                            url: "https://www.properati.com.ar/s/castelar-moron/casa/alquiler/"
+                        },
+                        {
+                            id: Cities.Haedo,
+                            url: "https://www.properati.com.ar/s/haedo/casa/alquiler/"
+                        }
+                    ]
+                    break
+                case `${RealStates.Properati.id}-${PropertyType.Field}-${Operations.Sale}`:
+                    urlObjective = [
+                        {
+                            id: Cities.Moron,
+                            url: "https://www.properati.com.ar/s/moron/terreno/venta/"
+                        },
+                        {
+                            id: Cities.Ituzaingo,
+                            url: "https://www.properati.com.ar/s/ituzaingo/terreno/venta/"
+                        },
+                        {
+                            id: Cities.Castelar,
+                            url: "https://www.properati.com.ar/s/castelar-moron/terreno/venta/"
+                        },
+                        {
+                            id: Cities.Haedo,
+                            url: "https://www.properati.com.ar/s/haedo/terreno/venta/"
                         }
                     ]
                     break

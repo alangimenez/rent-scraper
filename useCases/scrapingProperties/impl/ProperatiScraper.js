@@ -1,11 +1,10 @@
 const puppeteer = require('puppeteer');
+const { navigateWithRetry } = require('../NavigationWithRetry')
 
 class ProperatiScraper {
     constructor() { }
 
     async scrape(objective) {
-        console.log(`Inició scraping para la ciudad ${objective.id}`)
-
         const browser = await puppeteer.launch();
         
         let iteration = 1
@@ -27,8 +26,6 @@ class ProperatiScraper {
 
         const propertiesWithoutNulls = propertyList.filter(property => property.id !== null)
             
-        console.log(`Finalizó scraping para la ciudad ${objective.id}. Se relevaron ${propertiesWithoutNulls.length} propiedades`);
-
         await browser.close();
 
         return propertiesWithoutNulls
@@ -43,7 +40,9 @@ class ProperatiScraper {
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
         // Navegar a la página objetivo
-        await page.goto(`${url}${pageId}`, { waitUntil: 'domcontentloaded' });
+        console.log(`pagina: ${url}${pageId}`)
+        await navigateWithRetry(page, `${url}${pageId}`, 3)
+        // await page.goto(`${url}${pageId}`, { waitUntil: 'domcontentloaded' });
 
         const extractListings = async () => {
             return await page.evaluate(() => {
@@ -80,13 +79,18 @@ class ProperatiScraper {
                     const listingCardDiv = link.querySelector('div.listing.listing-card');
                     const dataIdAnuncio = listingCardDiv ? listingCardDiv.getAttribute('data-idanuncio') : null;
 
+                    // Inmobiliaria
+                    const realStateContainer = link.querySelector('div.listing.listing-card > div.listing-card__information > div.listing-card__information-bottom > div.listing-card__publication-info > div.listing-card__agency-name')
+                    const realStateValue = realStateContainer ? realStateContainer.innerText.trim() : null
+
                     return {
                         pictureSrc: imgSrc,
                         title: title,
                         price: price,
                         url: completeHref,
                         id: dataIdAnuncio,
-                        address: ''
+                        address: '',
+                        realState: realStateValue
                     };
                 });
             });

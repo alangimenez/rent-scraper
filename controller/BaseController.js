@@ -12,7 +12,7 @@ class BaseController {
             throw new Error("The param realState is invalid")
         }
 
-        return realState
+        return RealStates[realState]
     }
 
     retrieveOperation(req) {
