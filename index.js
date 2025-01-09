@@ -1,5 +1,6 @@
 const ScraperController = require('./controller/ScraperController')
 const PropertyController = require('./controller/PropertyController')
+const RegisterProcessController = require('./controller/RegisterProcessController')
 
 const config = require('./config/Configs');
 const express = require("express");
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/scraper', ScraperController)
 app.use('/property', PropertyController)
+app.use('/registerProcess', RegisterProcessController)
 
 const port = config.PORT;
 

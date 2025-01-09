@@ -45,6 +45,16 @@ class BaseController {
         return createdDate
     }
 
+    retrieveDate(req) {
+        const date = req.query.date
+
+        if(date == undefined) {
+            throw new Error("The param date can't be empty")
+        }
+
+        return date
+    }
+
     retrieveLowerPrice(req) {
         const lowerPrice = req.query.lowerPrice
 
