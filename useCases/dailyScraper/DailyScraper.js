@@ -3,6 +3,7 @@ const CompareProperties = require('../propertyComparator/CompareProperties')
 const SaveProperties = require('../saveNewProperties/SaveNewProperties')
 const PropertyDecorator = require('../propertyDecorator/PropertyDecorator')
 const CasesForScraping = require('../../enums/CasesForScraping')
+const SaveRegister = require('../saveRegister/SaveRegister')
 
 class DailyScraper {
     constructor() {}
@@ -21,22 +22,15 @@ class DailyScraper {
         for (const e of CasesForScraping) {
             try {
                 const quantityAddedProperties = await this.handlePropertyProcess(e.realState, e.propertyType, e.operation)
+                await SaveRegister.saveProcessResult(e, quantityAddedProperties, "OK")
                 console.log(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK, added: ${quantityAddedProperties.addedProperties}`)
             } catch (e) {
                 console.log(e.message)
+                await SaveRegister.saveProcessResult(e, quantityAddedProperties, "ERROR")
                 console.log(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status ERROR`)
             }
         }
 
-
-        /* CasesForScraping.forEach(async e => {
-            try {
-                const quantityAddedProperties = await this.handlePropertyProcess(e.realState, e.propertyType, e.operation)
-                console.log(`Real state: ${e.realState}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK, added: ${quantityAddedProperties.addedProperties}`)
-            } catch (e) {
-                console.log(`Real state: ${e.realState}, propertyType: ${e.propertyType}, operation: ${e.operation}, status ERROR`)
-            }
-        }) */
         return
     }
 
