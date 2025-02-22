@@ -7,6 +7,7 @@ const sarroPucheta = require('./impl/SarroPuchetaScraper')
 const properatiScraper = require('./impl/ProperatiScraper')
 const reMaxScraper = require('./impl/RemaxScraper')
 const argenpropScraper = require('./impl/ArgenPropScraper')
+const argencasasScraper = require('./impl/ArgencasasScraper')
 const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
 
 class ScrapingProperties {
@@ -67,6 +68,9 @@ class ScrapingProperties {
                 break
             case realState.Argenprop:
                 scraper = argenpropScraper
+                break
+            case realState.Argencasas:
+                scraper = argencasasScraper
                 break
             default:
                 console.log(realStateName)

@@ -48,5 +48,9 @@ module.exports = {
     Argenprop: {
         id: "Argenprop",
         sourceType: Source.Portal
+    },
+    Argencasas: {
+        id: "Argencasas",
+        sourceType: Source.Portal
     }
 }
