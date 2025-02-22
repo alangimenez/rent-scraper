@@ -73,7 +73,7 @@ class ProperatiScraper {
 
                     // Href del <a>
                     const href = link.getAttribute('data-url');
-                    const completeHref = `https://www.properati.com.ar${href}`
+                    const completeHref = `${href}`
 
                     // Atributo data-idanuncio
                     // const listingCardDiv = link.getAttribute('div.listing.listing-card');

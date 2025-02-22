@@ -36,5 +36,17 @@ module.exports = {
     Properati: {
         id: "Properati",
         sourceType: Source.Portal
+    },
+    MercadoLibre: {
+        id: "MercadoLibre",
+        sourceType: Source.Portal
+    },
+    ReMax: {
+        id: "ReMax",
+        sourceType: Source.RealState
+    },
+    Argenprop: {
+        id: "Argenprop",
+        sourceType: Source.Portal
     }
 }

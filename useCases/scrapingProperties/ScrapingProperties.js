@@ -5,10 +5,12 @@ const DeAngelisScraper = require('./impl/DeAngelisScraper')
 const UrrutiaScraper = require('./impl/UrrutiaScraper')
 const sarroPucheta = require('./impl/SarroPuchetaScraper')
 const properatiScraper = require('./impl/ProperatiScraper')
+const reMaxScraper = require('./impl/RemaxScraper')
+const argenpropScraper = require('./impl/ArgenPropScraper')
 const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
 
 class ScrapingProperties {
-    constructor() {}
+    constructor() { }
 
     async scrapeProperties(realStateName, propertyType, operation) {
         console.log(`Inició scraping para ${realStateName.id}`)
@@ -16,7 +18,7 @@ class ScrapingProperties {
         const urlObjectives = UrlObjectiveDecisor.getUrlObjective(realStateName.id, operation, propertyType)
 
         let propertyList = []
-        
+
         for (const e of urlObjectives) {
             console.log(`Inició scraping para la ciudad ${e.id}, operacion ${operation}, tipo ${propertyType}`)
             const properties = await scraper.scrape(e)
@@ -32,7 +34,7 @@ class ScrapingProperties {
     #getRealStateScraper(realStateName) {
         let scraper;
 
-        switch(realStateName) {
+        switch (realStateName) {
             case realState.ICarlucci:
                 scraper = ICarlucciScraper
                 break
@@ -59,6 +61,12 @@ class ScrapingProperties {
                 break
             case realState.Properati:
                 scraper = properatiScraper
+                break
+            case realState.ReMax:
+                scraper = reMaxScraper
+                break
+            case realState.Argenprop:
+                scraper = argenpropScraper
                 break
             default:
                 console.log(realStateName)

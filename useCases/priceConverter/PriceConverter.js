@@ -3,10 +3,11 @@ const nerinaAlloPriceConverter = require('./impl/NerinaAlloPriceConverter')
 const uriartePriceConverter = require('./impl/UriartePriceConverter')
 const sarroPuchetaPriceConverter = require('./impl/SarroPuchetaPriceConverter')
 const properatiPriceConverter = require('./impl/ProperatiPriceConverter')
+const remaxPriceConverter = require('./impl/RemaxPriceConverter')
 const realState = require('../../enums/RealStates')
 
 class PriceConverter {
-    constructor() {}
+    constructor() { }
 
     convert(realStateName, currency, price) {
         const converter = this.#getRealStatePriceConverter(realStateName)
@@ -16,7 +17,7 @@ class PriceConverter {
     #getRealStatePriceConverter(realStateName) {
         let converter
 
-        switch(realStateName) {
+        switch (realStateName) {
             case realState.ICarlucci:
                 converter = ICarlucciPriceConverter
                 break
@@ -44,6 +45,12 @@ class PriceConverter {
             case realState.Properati:
                 converter = properatiPriceConverter
                 break
+            case realState.ReMax:
+                converter = remaxPriceConverter
+                break
+            case realState.Argenprop:
+                converter = properatiPriceConverter
+                break
             default:
                 throw new Error("Converter case not implemented")
         }
@@ -52,6 +59,6 @@ class PriceConverter {
     }
 }
 
-const priceConverterInstance = new PriceConverter() 
+const priceConverterInstance = new PriceConverter()
 
 module.exports = priceConverterInstance

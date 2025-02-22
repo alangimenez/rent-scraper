@@ -2,7 +2,7 @@ async function navigateWithRetry(page, url, maxRetries = 3) {
     let attempt = 0;
     while (attempt < maxRetries) {
       try {
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        await page.goto(url, { waitUntil: 'load', timeout: 30000 });
 
         return; // Salir si tiene éxito
       } catch (error) {

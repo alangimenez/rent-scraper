@@ -3,7 +3,7 @@ const nerinaAlloCurrencyRetriever = require('./impl/NerinaAlloCurrencyRetriever'
 const realState = require('../../enums/RealStates')
 
 class RetrieveCurrency {
-    constructor() {}
+    constructor() { }
 
     retrieve(price, realStateName) {
         const retriever = this.#getRealStateCurrencyRetriever(realStateName)
@@ -13,7 +13,7 @@ class RetrieveCurrency {
     #getRealStateCurrencyRetriever(realStateName) {
         let retriever
 
-        switch(realStateName) {
+        switch (realStateName) {
             case realState.ICarlucci:
                 retriever = iCarlucciCurrencyRetriever
                 break
@@ -41,6 +41,12 @@ class RetrieveCurrency {
             case realState.Properati:
                 retriever = nerinaAlloCurrencyRetriever
                 break
+            case realState.ReMax:
+                retriever = nerinaAlloCurrencyRetriever
+                break
+            case realState.Argenprop:
+                retriever = nerinaAlloCurrencyRetriever
+                break
             default:
                 throw new Error("Currency retriever case not implemented")
         }
@@ -49,6 +55,6 @@ class RetrieveCurrency {
     }
 }
 
-const currencyRetriever = new RetrieveCurrency() 
+const currencyRetriever = new RetrieveCurrency()
 
 module.exports = currencyRetriever
