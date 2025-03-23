@@ -371,23 +371,27 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
+            case `${RealStates.MercadoLibre.id}-${PropertyType.House}-${Operations.Sale}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://inmuebles.mercadolibre.com.ar/casas/venta/bsas-gba-oeste/moron"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://inmuebles.mercadolibre.com.ar/casas/venta/bsas-gba-oeste/ituzaingo"
+                    }
+                ]
+                break
             case `${RealStates.MercadoLibre.id}-${PropertyType.House}-${Operations.Rent}`:
                 urlObjective = [
                     {
                         id: Cities.Moron,
-                        url: "https://www.properati.com.ar/s/moron/terreno/venta/"
+                        url: "https://inmuebles.mercadolibre.com.ar/casas/alquiler/bsas-gba-oeste/moron"
                     },
                     {
                         id: Cities.Ituzaingo,
-                        url: "https://www.properati.com.ar/s/ituzaingo/terreno/venta/"
-                    },
-                    {
-                        id: Cities.Castelar,
-                        url: "https://www.properati.com.ar/s/castelar-moron/terreno/venta/"
-                    },
-                    {
-                        id: Cities.Haedo,
-                        url: "https://www.properati.com.ar/s/haedo/terreno/venta/"
+                        url: "https://inmuebles.mercadolibre.com.ar/casas/alquiler/bsas-gba-oeste/ituzaingo"
                     }
                 ]
                 break

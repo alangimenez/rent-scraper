@@ -5,6 +5,7 @@ const sarroPuchetaPriceConverter = require('./impl/SarroPuchetaPriceConverter')
 const properatiPriceConverter = require('./impl/ProperatiPriceConverter')
 const remaxPriceConverter = require('./impl/RemaxPriceConverter')
 const argencasasPriceConverter = require('./impl/ArgencasasPriceConverter')
+const mercadoLibrePriceConverter = require('./impl/MercadoLibrePriceConverter')
 const realState = require('../../enums/RealStates')
 
 class PriceConverter {
@@ -54,6 +55,9 @@ class PriceConverter {
                 break
             case realState.Argencasas:
                 converter = argencasasPriceConverter
+                break
+            case realState.MercadoLibre:
+                converter = mercadoLibrePriceConverter
                 break
             default:
                 throw new Error("Converter case not implemented")

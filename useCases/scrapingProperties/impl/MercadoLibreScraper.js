@@ -11,114 +11,174 @@ class MercadoLibreScraper {
         // Configurar User-Agent para evitar bloqueos
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
-        let propertiesList = []
+        await page.goto(objective.url); // Reemplaza con la URL real
 
         let validator = true
-        let pageId = 2
+        let pageId = 1
 
-        while (validator) {
-            const propertiesToAdd = await this.#scrapeDynamicWebsite(pageId, browser, objective.url)
-            propertiesList = [...propertiesList, ...propertiesToAdd]
-            if (propertiesToAdd.length == 0) {
+        const propertiesList = []
+
+        propertiesList.push(...await this.#scrapeFirstWebsite(0, browser, objective.url))
+
+        do {
+            const properties = await this.#scrapeDynamicWebsite(pageId, browser, objective.url)
+            if (properties.length === 0) {
                 validator = false
+            } else {
+                propertiesList.push(...properties)
+                pageId++
             }
-            pageId++
-        }
-
-        // Navegar a la página objetivo
-        await navigateWithRetry(page, `${objective.url}p=1`, 3)
-        // await page.goto(`${objective.url}p=1`, { waitUntil: 'domcontentloaded' });
-
-        let latestProperties
-
-        const extractListings = async () => {
-            return await page.$$eval('#propiedades li', (lis) => {
-                return lis.map(li => {
-                    const propDescTipoUb = li.querySelector('.prop-desc-tipo-ub').textContent;
-                    const propValorNro = li.querySelector('.prop-valor-nro').textContent;
-                    const destImg = li.querySelector('.dest-img').getAttribute('src');
-                    const link = li.querySelector('a').href;
-                    const propDescDir = li.querySelector('.prop-desc-dir').textContent;
-                    const idProp = li.querySelector('.codref.detalleColorText').textContent
-    
-                    return {
-                        title: propDescTipoUb,
-                        price: propValorNro,
-                        pictureSrc: destImg,
-                        url: link,
-                        address: propDescDir,
-                        id: idProp
-                    };
-                });
-            });
-        }
-
-        try {
-            latestProperties = await extractListings()
-        } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la ultima hoja`)
-            console.log(error.message)
-            listings = []
-        }
-
-        latestProperties.forEach(e => {
-            const priceArray = e.price.split('\n')
-            const unformattedPrice = priceArray[1].replaceAll("    ", "")
-            e.price = unformattedPrice
-        })
-
-        propertiesList = [...propertiesList, ...latestProperties]
+        } while (validator)
 
         await browser.close();
 
-        const listWithoutDuplicates = this.#removeDuplicated(propertiesList)
+        this.#addCity(propertiesList, objective.id)
 
-        const listWithoutDuplicatesById = this.#removeDuplicatedById(listWithoutDuplicates)
-
-        listWithoutDuplicatesById.forEach(e => {
-                e.city = objective.id
-            })
-
-        return listWithoutDuplicatesById
+        return propertiesList
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
         console.log(`Analizando pagina ${pageId}`)
-        
+
         const page = await browser.newPage();
 
         // Configurar User-Agent
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
-        await navigateWithRetry(page, `${urlObjective}p=${pageId}`, 3)
-        // await page.goto(`${urlObjective}p=${pageId}`);
+        const initialProperty = (pageId * 48) + 1
+        const urlCompleted = `${urlObjective}_Desde_${initialProperty}_PriceRange_0USD-80000USD_NoIndex_True`
+
+        console.log(`URL: ${urlCompleted}`)
+
+        // page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+
+        await navigateWithRetry(page, urlCompleted, 3)
 
         // Evaluar el contenido de la página y extraer ambos datos
         let data
 
         const extractListings = async () => {
             return await page.evaluate(() => {
-                // Obtener todos los elementos <li>
-                const items = document.querySelectorAll('li');
-    
-                // Procesar cada <li> y extraer la información deseada
-                return Array.from(items).map(li => {
-                    const tipoUb = li.querySelector('.prop-desc-tipo-ub')?.innerText || null;
-                    const valorNro = li.querySelector('.prop-valor-nro')?.innerText || null;
-                    const imgSrc = li.querySelector('img.dest-img')?.src || null;
-                    const href = li.querySelector('a')?.href || null;
-                    const descDir = li.querySelector('.prop-desc-dir')?.innerText || null;
-                    const idProp = li.querySelector('.codref.detalleColorText').textContent
-    
-                    return {
-                        title: tipoUb,
-                        price: valorNro,
-                        pictureSrc: imgSrc,
-                        url: href,
-                        address: descDir,
-                        id: idProp
-                    };
-                });
+                const olElement = document.querySelector('ol.ui-search-layout.ui-search-layout--grid');
+                if (!olElement) return [];
+
+                return Array.from(olElement.children).map(li => {
+                    const wrapper = li.querySelector('div');
+                    if (!wrapper) return null;
+
+                    const card = wrapper.querySelector('div');
+                    if (!card) return null;
+
+                    const content = card.querySelector('div.ui-search-result__content');
+                    if (!content) return null;
+
+                    const contentWrapper = card.querySelector('div.ui-search-result__content-wrapper');
+                    if (!content) return null;
+
+                    const titleWrapper = contentWrapper.querySelectorAll('div')[0]
+                    if (!titleWrapper) return null;
+
+                    const titleContent = titleWrapper.querySelector('div')
+                    if (!titleWrapper) return null;
+
+                    const title = titleContent.textContent.trim();
+
+                    const contentWrapperChildDivs = Array.from(contentWrapper.querySelectorAll(':scope > div'))
+
+                    const sellerSpan = contentWrapperChildDivs[4]
+                    const realState = sellerSpan ? sellerSpan.textContent.trim() : null;
+
+                    const priceContent = contentWrapperChildDivs[1]
+                    const price = priceContent ? priceContent.textContent.trim() : null;
+
+                    const urlContent = titleContent.querySelector('a')
+                    const url = urlContent ? urlContent.getAttribute('href') : null
+
+                    const addressContent = contentWrapperChildDivs[3]
+                    const address = addressContent ? addressContent.textContent.trim() : null
+
+                    const imgWrapper = wrapper.querySelectorAll('img')[0]
+                    const pictureSrc = imgWrapper ? imgWrapper.getAttribute('src') : null
+
+                    return { title, realState, price, url, address, pictureSrc };
+                })
+            });
+        }
+
+        try {
+            data = await extractListings()
+        } catch (e) {
+            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            console.log(e.message)
+            data = []
+        }
+
+        this.#addIdProperty(data)
+
+        return data
+    }
+
+    async #scrapeFirstWebsite(pageId, browser, urlObjective) {
+        console.log(`Analizando pagina ${pageId}`)
+
+        const page = await browser.newPage();
+
+        // Configurar User-Agent
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
+
+        const initialProperty = pageId * 48
+        const urlCompleted = `${urlObjective}_Desde_${initialProperty}_PriceRange_0USD-80000USD_NoIndex_True`
+
+        console.log(`URL: ${urlCompleted}`)
+
+        // page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+
+        await navigateWithRetry(page, urlCompleted, 3)
+
+        // Evaluar el contenido de la página y extraer ambos datos
+        let data
+
+        const extractListings = async () => {
+            return await page.evaluate(() => {
+                const olElement = document.querySelector('ol.ui-search-layout.ui-search-layout--grid');
+                if (!olElement) return [];
+
+                return Array.from(olElement.children).map(li => {
+                    const wrapper = li.querySelector('div');
+                    if (!wrapper) return null;
+
+                    const card = wrapper.querySelector('div');
+                    if (!card) return null;
+
+                    const content = card.querySelector('div.poly-card__content');
+                    if (!content) return null;
+
+                    const titleWrapper = content.querySelector('h3.poly-component__title-wrapper');
+                    if (!titleWrapper) return null;
+
+                    const link = titleWrapper.querySelector('a');
+                    const title = link ? link.textContent.trim() : null;
+
+                    const sellerSpan = content.querySelector('span.poly-component__seller');
+                    const realState = sellerSpan ? sellerSpan.textContent.trim() : null;
+
+                    const priceContent = content.querySelector('div.poly-component__price');
+                    const price = priceContent ? priceContent.textContent.trim() : null;
+
+                    const urlContent = titleWrapper.querySelector('a')
+                    const url = urlContent ? urlContent.getAttribute('href') : null
+
+                    const adressContent = content.querySelector('span.poly-component__location')
+                    const address = adressContent ? adressContent.textContent.trim() : null
+
+                    const imgWrapper = card.querySelector('div.poly-card__portada')
+                    const imgContent = imgWrapper ? imgWrapper.querySelector('img.poly-component__picture') : null
+                    const imgSrc = imgContent ? imgContent.getAttribute('src') : null
+                    const imgDataSrc = imgContent ? imgContent.getAttribute('data-src') : null
+                    const pictureSrc = imgSrc.includes("data:image") ? imgDataSrc : imgSrc
+
+                    return { title, realState, price, url, address, pictureSrc };
+                })
             });
         }
 
@@ -130,31 +190,26 @@ class MercadoLibreScraper {
             data = []
         }
 
-        data.forEach(e => {
-            const priceArray = e.price.split('\n')
-            const unformattedPrice = priceArray[0].replaceAll("    ", "")
-            e.price = unformattedPrice
-        })
-
-        console.log(`Se obtuvieron ${data.length} nuevas propiedades`)
+        this.#addIdProperty(data)
 
         return data
     }
 
-    #removeDuplicated(list) {
-        return Array.from(new Set(list.map(JSON.stringify))).map(JSON.parse);
+    #addIdProperty(properties) {
+        properties.forEach(p => {
+            p.id = this.#getIdProperty(p.url)
+        })
     }
 
-    #removeDuplicatedById(list) {
-        const seen = new Set();
-        return list.filter(item => {
-            if (seen.has(item.id)) {
-                return false; // Si ya existe, lo omite
-            } else {
-                seen.add(item.id); // Agrega al conjunto de IDs vistos
-                return true; // Mantiene el primero que encuentra
-            }
-        });
+    #getIdProperty(urlProperty) {
+        const match = urlProperty.match(/(MLA-\d+)/);
+        return match ? match[0] : null;
+    }
+
+    #addCity(properties, city) {
+        properties.forEach(p => {
+            p.city = city
+        })
     }
 }
 

@@ -1,6 +1,7 @@
 const iCarlucciCurrencyRetriever = require('./impl/ICarlucciCurrencyRetriever')
 const nerinaAlloCurrencyRetriever = require('./impl/NerinaAlloCurrencyRetriever')
 const argencasasCurrencyRetriever = require('./impl/ArgencasasCurrencyRetriever')
+const mercadoLibreCurrencyRetriever = require('./impl/MercadoLibreCurrencyRetriever')
 const realState = require('../../enums/RealStates')
 
 class RetrieveCurrency {
@@ -50,6 +51,9 @@ class RetrieveCurrency {
                 break
             case realState.Argencasas:
                 retriever = argencasasCurrencyRetriever
+                break
+            case realState.MercadoLibre:
+                retriever = mercadoLibreCurrencyRetriever
                 break
             default:
                 throw new Error("Currency retriever case not implemented")
