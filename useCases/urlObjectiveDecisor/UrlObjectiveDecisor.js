@@ -431,6 +431,30 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
+            case `${RealStates.Zonaprop.id}-${PropertyType.House}-${Operations.Rent}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.zonaprop.com.ar/casas-alquiler-moron-orden-precio-descendente.html"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.zonaprop.com.ar/casas-alquiler-ituzaingo-orden-precio-descendente.html"
+                    }
+                ]
+                break
+            case `${RealStates.Zonaprop.id}-${PropertyType.House}-${Operations.Sale}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.zonaprop.com.ar/casas-venta-moron-menos-80000-dolar-orden-precio-descendente.html"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.zonaprop.com.ar/casas-venta-ituzaingo-menos-80000-dolar-orden-precio-descendente.html"
+                    }
+                ]
+                break
             default:
                 throw new Error(`urlObjective not implemented for real state ${realState}, operation ${operation}, property type ${propertyType}`)
         }

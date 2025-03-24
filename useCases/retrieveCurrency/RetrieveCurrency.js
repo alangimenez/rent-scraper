@@ -55,6 +55,9 @@ class RetrieveCurrency {
             case realState.MercadoLibre:
                 retriever = mercadoLibreCurrencyRetriever
                 break
+            case realState.Zonaprop:
+                retriever = nerinaAlloCurrencyRetriever
+                break
             default:
                 throw new Error("Currency retriever case not implemented")
         }

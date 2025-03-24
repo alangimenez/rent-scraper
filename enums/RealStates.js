@@ -52,5 +52,9 @@ module.exports = {
     Argencasas: {
         id: "Argencasas",
         sourceType: Source.Portal
+    },
+    Zonaprop: {
+        id: "Zonaprop",
+        sourceType: Source.Portal
     }
 }
