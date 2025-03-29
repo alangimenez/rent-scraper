@@ -36,6 +36,6 @@ module.exports = [
     new ScrapingCase(RealStates.ReMax, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.Argenprop, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.Argencasas, Operations.Rent, PropertyType.House),
-    new ScrapingCase(RealStates.MercadoLibre, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.Zonaprop, Operations.Rent, PropertyType.House),
+    new ScrapingCase(RealStates.MercadoLibre, Operations.Rent, PropertyType.House),
 ]

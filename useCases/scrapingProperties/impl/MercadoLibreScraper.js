@@ -69,36 +69,38 @@ class MercadoLibreScraper {
                     const card = wrapper.querySelector('div');
                     if (!card) return null;
 
-                    const content = card.querySelector('div.ui-search-result__content');
+                    const content = card.querySelector('div');
                     if (!content) return null;
 
-                    const contentWrapper = card.querySelector('div.ui-search-result__content-wrapper');
-                    if (!content) return null;
-
-                    const titleWrapper = contentWrapper.querySelectorAll('div')[0]
+                    const titleWrapper = content.querySelectorAll('div')[1]
                     if (!titleWrapper) return null;
 
-                    const titleContent = titleWrapper.querySelector('div')
+                    const titleContent = titleWrapper.querySelector('h3')
                     if (!titleWrapper) return null;
 
                     const title = titleContent.textContent.trim();
 
-                    const contentWrapperChildDivs = Array.from(contentWrapper.querySelectorAll(':scope > div'))
+                    const contentWrapperChildDivs = Array.from(content.querySelectorAll(':scope > div'))
 
-                    const sellerSpan = contentWrapperChildDivs[4]
-                    const realState = sellerSpan ? sellerSpan.textContent.trim() : null;
+                    const realState = null
 
                     const priceContent = contentWrapperChildDivs[1]
-                    const price = priceContent ? priceContent.textContent.trim() : null;
+                    const priceContainer = priceContent.querySelector('div.poly-component__price')
+
+                    const price = priceContainer ? priceContainer.textContent.trim() : null;
 
                     const urlContent = titleContent.querySelector('a')
                     const url = urlContent ? urlContent.getAttribute('href') : null
 
-                    const addressContent = contentWrapperChildDivs[3]
-                    const address = addressContent ? addressContent.textContent.trim() : null
+                    const addressContent = contentWrapperChildDivs[1]
+                    const addressContainer = addressContent.querySelector('span.poly-component__location')
+                    const address = addressContainer ? addressContainer.textContent.trim() : null
 
-                    const imgWrapper = wrapper.querySelectorAll('img')[0]
-                    const pictureSrc = imgWrapper ? imgWrapper.getAttribute('src') : null
+                    const imgWrapper = content.querySelector('div.poly-card__portada')
+                    const imgContent = imgWrapper ? imgWrapper.querySelector('img.poly-component__picture') : null
+                    const imgSrc = imgContent ? imgContent.getAttribute('src') : null
+                    const imgDataSrc = imgContent ? imgContent.getAttribute('data-src') : null
+                    const pictureSrc = imgSrc.includes("data:image") ? imgDataSrc : imgSrc
 
                     return { title, realState, price, url, address, pictureSrc };
                 })
@@ -114,6 +116,8 @@ class MercadoLibreScraper {
         }
 
         this.#addIdProperty(data)
+
+        console.log(`Se encontraron ${data.length} propiedades en la pagina ${pageId}`)
 
         return data
     }
@@ -191,6 +195,8 @@ class MercadoLibreScraper {
         }
 
         this.#addIdProperty(data)
+
+        console.log(`Se encontraron ${data.length} propiedades en la pagina ${pageId}`)
 
         return data
     }
