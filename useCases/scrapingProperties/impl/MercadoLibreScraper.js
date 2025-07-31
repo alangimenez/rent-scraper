@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class MercadoLibreScraper {
     constructor() { }
@@ -38,7 +39,7 @@ class MercadoLibreScraper {
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
 
         const page = await browser.newPage();
 
@@ -48,9 +49,9 @@ class MercadoLibreScraper {
         const initialProperty = (pageId * 48) + 1
         const urlCompleted = `${urlObjective}_Desde_${initialProperty}_PriceRange_0USD-80000USD_NoIndex_True`
 
-        console.log(`URL: ${urlCompleted}`)
+        loggerProcessor.debug(`URL: ${urlCompleted}`)
 
-        // page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+        // page.on('console', msg => loggerProcessor.debug('PAGE LOG:', msg.text()));
 
         await navigateWithRetry(page, urlCompleted, 3)
 
@@ -110,20 +111,20 @@ class MercadoLibreScraper {
         try {
             data = await extractListings()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(e.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(e.message)
             data = []
         }
 
         this.#addIdProperty(data)
 
-        console.log(`Se encontraron ${data.length} propiedades en la pagina ${pageId}`)
+        loggerProcessor.debug(`Se encontraron ${data.length} propiedades en la pagina ${pageId}`)
 
         return data
     }
 
     async #scrapeFirstWebsite(pageId, browser, urlObjective) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
 
         const page = await browser.newPage();
 
@@ -133,9 +134,9 @@ class MercadoLibreScraper {
         const initialProperty = pageId * 48
         const urlCompleted = `${urlObjective}_Desde_${initialProperty}_PriceRange_0USD-80000USD_NoIndex_True`
 
-        console.log(`URL: ${urlCompleted}`)
+        loggerProcessor.debug(`URL: ${urlCompleted}`)
 
-        // page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+        // page.on('console', msg => loggerProcessor.debug('PAGE LOG:', msg.text()));
 
         await navigateWithRetry(page, urlCompleted, 3)
 
@@ -189,14 +190,14 @@ class MercadoLibreScraper {
         try {
             data = await extractListings()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             data = []
         }
 
         this.#addIdProperty(data)
 
-        console.log(`Se encontraron ${data.length} propiedades en la pagina ${pageId}`)
+        loggerProcessor.debug(`Se encontraron ${data.length} propiedades en la pagina ${pageId}`)
 
         return data
     }

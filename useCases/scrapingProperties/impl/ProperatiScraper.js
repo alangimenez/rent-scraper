@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class ProperatiScraper {
     constructor() { }
@@ -32,7 +33,7 @@ class ProperatiScraper {
     }
 
     async #scraperWebsite(pageId, browser, url) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
 
         const page = await browser.newPage();
 
@@ -40,7 +41,7 @@ class ProperatiScraper {
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
         // Navegar a la página objetivo
-        console.log(`pagina: ${url}${pageId}`)
+        loggerProcessor.debug(`pagina: ${url}${pageId}`)
         await navigateWithRetry(page, `${url}${pageId}`, 3)
         // await page.goto(`${url}${pageId}`, { waitUntil: 'domcontentloaded' });
 
@@ -101,12 +102,12 @@ class ProperatiScraper {
         try {
             listings = await extractListings();
         } catch (error) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             listings = []
         }
 
-        console.log(`Se obtuvieron ${listings.length} nuevas propiedades`)
+        loggerProcessor.debug(`Se obtuvieron ${listings.length} nuevas propiedades`)
 
         return listings
     }

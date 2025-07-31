@@ -6,7 +6,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=dev nodemon index.js",
     "prod": "NODE_ENV=prod nodemon index.js",
-    "dev-debug": "NODE_ENV=dev DEBUG_MODE=true nodemon index.js"
+    "dev-debug": "NODE_ENV=dev DEBUG_MODE=true nodemon index.js",
+    "dev-log-debug": "NODE_ENV=dev LOG_LEVEL=0 nodemon index.js",
+    "dev-log-info": "NODE_ENV=dev LOG_LEVEL=1 nodemon index.js",
+    "dev-log-warn": "NODE_ENV=dev LOG_LEVEL=2 nodemon index.js",
+    "dev-log-error": "NODE_ENV=dev LOG_LEVEL=3 nodemon index.js"
   },
   "keywords": [],
   "author": "",

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class UrrutiaScraper {
     constructor() { }
@@ -56,8 +57,8 @@ class UrrutiaScraper {
         try {
             latestProperties = await extractListings()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la ultima hoja`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la ultima hoja`)
+            loggerProcessor.error(error.message)
             listings = []
         }
 
@@ -83,7 +84,7 @@ class UrrutiaScraper {
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
         
         const page = await browser.newPage();
 
@@ -125,8 +126,8 @@ class UrrutiaScraper {
         try {
             data = await extractListings()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             data = []
         }
 
@@ -136,7 +137,7 @@ class UrrutiaScraper {
             e.price = unformattedPrice
         })
 
-        console.log(`Se obtuvieron ${data.length} nuevas propiedades`)
+        loggerProcessor.debug(`Se obtuvieron ${data.length} nuevas propiedades`)
 
         return data
     }

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class ArgencasasScraper {
     constructor() { }
@@ -19,7 +20,7 @@ class ArgencasasScraper {
     }
 
     async #scrapeDynamicWebsite(browser, urlObjective) {
-        console.log(`Analizando pagina única`)
+        loggerProcessor.debug(`Analizando pagina única`)
 
         const page = await browser.newPage();
 
@@ -57,12 +58,12 @@ class ArgencasasScraper {
         try {
             dataList = await extractData()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             dataList = []
         }
 
-        console.log(`Se obtuvieron ${dataList.length} nuevas propiedades`)
+        loggerProcessor.debug(`Se obtuvieron ${dataList.length} nuevas propiedades`)
 
         return dataList
     }

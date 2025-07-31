@@ -11,25 +11,26 @@ const argencasasScraper = require('./impl/ArgencasasScraper')
 const mercadoLibreScraper = require('./impl/MercadoLibreScraper')
 const zonapropScraper = require('./impl/ZonapropScraper')
 const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
+const LoggerProcessor = require('../loggerProcessor/LoggerProcessor')
 
 class ScrapingProperties {
     constructor() { }
 
     async scrapeProperties(realStateName, propertyType, operation) {
-        console.log(`Inició scraping para ${realStateName.id}`)
+        LoggerProcessor.info(`Inició scraping para ${realStateName.id}`)
         const scraper = this.#getRealStateScraper(realStateName)
         const urlObjectives = UrlObjectiveDecisor.getUrlObjective(realStateName.id, operation, propertyType)
 
         let propertyList = []
 
         for (const e of urlObjectives) {
-            console.log(`Inició scraping para la ciudad ${e.id}, operacion ${operation}, tipo ${propertyType}`)
+            LoggerProcessor.info(`Inició scraping para la ciudad ${e.id}, operacion ${operation}, tipo ${propertyType}`)
             const properties = await scraper.scrape(e)
             propertyList = [...propertyList, ...properties]
-            console.log(`Finalizó scraping para la ciudad ${e.id}, operacion ${operation}, tipo ${propertyType}`)
+            LoggerProcessor.info(`Finalizó scraping para la ciudad ${e.id}, operacion ${operation}, tipo ${propertyType}`)
         }
 
-        console.log(`Finalizó scraping para ${realStateName.id}`)
+        LoggerProcessor.info(`Finalizó scraping para ${realStateName.id}`)
 
         return propertyList
     }
@@ -81,7 +82,7 @@ class ScrapingProperties {
                 scraper = zonapropScraper
                 break
             default:
-                console.log(realStateName)
+                LoggerProcessor.error(realStateName)
                 throw new Error("Scraper case not implemented")
         }
 
