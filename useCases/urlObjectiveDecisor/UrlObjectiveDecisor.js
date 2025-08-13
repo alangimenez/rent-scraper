@@ -479,6 +479,18 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
+            case `${RealStates.Argenprop.id}-${PropertyType.House}-${Operations.Sale}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.argenprop.com/casas/venta/moron/dolares-hasta-120000?pagina-"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.argenprop.com/casas/venta/ituzaingo/dolares-hasta-120000?pagina-"
+                    }
+                ]
+                break
             default:
                 throw new Error(`urlObjective not implemented for real state ${realState}, operation ${operation}, property type ${propertyType}`)
         }
