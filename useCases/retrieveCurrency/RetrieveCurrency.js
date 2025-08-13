@@ -58,6 +58,9 @@ class RetrieveCurrency {
             case realState.Zonaprop:
                 retriever = nerinaAlloCurrencyRetriever
                 break
+            case realState.ClaudioGodoy:
+                retriever = nerinaAlloCurrencyRetriever
+                break
             default:
                 throw new Error("Currency retriever case not implemented")
         }

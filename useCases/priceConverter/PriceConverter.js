@@ -63,6 +63,9 @@ class PriceConverter {
             case realState.Zonaprop:
                 converter = zonapropPriceConverter
                 break
+            case realState.ClaudioGodoy:
+                converter = nerinaAlloPriceConverter
+                break
             default:
                 throw new Error("Converter case not implemented")
         }

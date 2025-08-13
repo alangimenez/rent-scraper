@@ -10,6 +10,7 @@ const argenpropScraper = require('./impl/ArgenPropScraper')
 const argencasasScraper = require('./impl/ArgencasasScraper')
 const mercadoLibreScraper = require('./impl/MercadoLibreScraper')
 const zonapropScraper = require('./impl/ZonapropScraper')
+const ClaudioGodoyScraper = require('./impl/ClaudioGodoyScraper')
 const UrlObjectiveDecisor = require('../urlObjectiveDecisor/UrlObjectiveDecisor')
 const LoggerProcessor = require('../loggerProcessor/LoggerProcessor')
 
@@ -80,6 +81,9 @@ class ScrapingProperties {
                 break
             case realState.Zonaprop:
                 scraper = zonapropScraper
+                break
+            case realState.ClaudioGodoy:
+                scraper = ClaudioGodoyScraper
                 break
             default:
                 LoggerProcessor.error(realStateName)
