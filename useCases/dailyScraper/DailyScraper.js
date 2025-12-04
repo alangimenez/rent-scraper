@@ -27,9 +27,9 @@ class DailyScraper {
                 const quantityAddedProperties = await this.handlePropertyProcess(e.realState, e.propertyType, e.operation)
                 await SaveRegister.saveProcessResult(e, quantityAddedProperties, "OK")
                 console.log(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK, added: ${quantityAddedProperties.addedProperties}`)
-            } catch (e) {
-                console.log(e.message)
-                await SaveRegister.saveProcessResult(e, quantityAddedProperties, "ERROR")
+            } catch (error) {
+                console.log(error.message)
+                await SaveRegister.saveProcessResult(e, { addedProperties: 0 }, "ERROR")
                 console.log(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status ERROR`)
             }
         }
