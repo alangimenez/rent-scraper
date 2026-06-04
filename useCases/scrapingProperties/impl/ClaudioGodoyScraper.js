@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
 const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
-class UrrutiaScraper {
+class ClaudioGodoyScraper {
     constructor() { }
 
     async scrape(objective) {
@@ -35,12 +35,12 @@ class UrrutiaScraper {
         const extractListings = async () => {
             return await page.$$eval('#propiedades li', (lis) => {
                 return lis.map(li => {
-                    const propDescTipoUb = li.querySelector('.prop-desc-tipo-ub').textContent;
-                    const propValorNro = li.querySelector('.prop-valor-nro').textContent;
+                    const propDescTipoUb = li.querySelector('.prop-desc-tipo-ub').textContent || null
+                    const propValorNro = li.querySelector('.prop-valor-nro').textContent || null
                     const destImg = li.querySelector('.dest-img').getAttribute('src');
                     const link = li.querySelector('a').href;
-                    const propDescDir = li.querySelector('.prop-desc-dir').textContent;
-                    const idProp = li.querySelector('.codref.detalleColorText').textContent
+                    const propDescDir = li.querySelector('.prop-desc-dir').textContent || null
+                    const idProp = li.querySelector('[class~="codref"]').textContent || null
     
                     return {
                         title: propDescTipoUb,
@@ -57,9 +57,9 @@ class UrrutiaScraper {
         try {
             latestProperties = await extractListings()
         } catch (e) {
-            loggerProcessor.error(`Hubo un error haciendo scraping sobre la ultima hoja`)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja final`)
             loggerProcessor.error(error.message)
-            listings = []
+            latestProperties = []
         }
 
         latestProperties.forEach(e => {
@@ -74,29 +74,29 @@ class UrrutiaScraper {
 
         const listWithoutDuplicates = this.#removeDuplicated(propertiesList)
 
-        const listWithoutDuplicatesById = this.#removeDuplicatedById(listWithoutDuplicates)
+        listWithoutDuplicates.forEach(e => {
+            e.city = objective.id
+        })
 
-        listWithoutDuplicatesById.forEach(e => {
-                e.city = objective.id
-            })
+        loggerProcessor.debug(`Se obtuvieron ${listWithoutDuplicates.length} nuevas propiedades`)
 
-        return listWithoutDuplicatesById
+        return listWithoutDuplicates
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
         loggerProcessor.debug(`Analizando pagina ${pageId}`)
-        
+
         const page = await browser.newPage();
 
         // Configurar User-Agent
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
+        const urlToNavigate = `${urlObjective}p=${pageId}`
+        loggerProcessor.debug(`Pagina a navegar: ${urlToNavigate}`)
         await navigateWithRetry(page, `${urlObjective}p=${pageId}`, 3)
         // await page.goto(`${urlObjective}p=${pageId}`);
 
         // Evaluar el contenido de la página y extraer ambos datos
-        let data
-
         const extractListings = async () => {
             return await page.evaluate(() => {
                 // Obtener todos los elementos <li>
@@ -121,11 +121,13 @@ class UrrutiaScraper {
                     };
                 });
             });
-        }
+        } 
+
+        let data
 
         try {
             data = await extractListings()
-        } catch (e) {
+        } catch (error) {
             loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
             loggerProcessor.error(error.message)
             data = []
@@ -137,28 +139,14 @@ class UrrutiaScraper {
             e.price = unformattedPrice
         })
 
-        loggerProcessor.debug(`Se obtuvieron ${data.length} nuevas propiedades`)
-
         return data
     }
 
     #removeDuplicated(list) {
         return Array.from(new Set(list.map(JSON.stringify))).map(JSON.parse);
     }
-
-    #removeDuplicatedById(list) {
-        const seen = new Set();
-        return list.filter(item => {
-            if (seen.has(item.id)) {
-                return false; // Si ya existe, lo omite
-            } else {
-                seen.add(item.id); // Agrega al conjunto de IDs vistos
-                return true; // Mantiene el primero que encuentra
-            }
-        });
-    }
 }
 
-const urrutiaScraperInstance = new UrrutiaScraper()
+const claudioGodoyScraperInstance = new ClaudioGodoyScraper()
 
-module.exports = urrutiaScraperInstance;
+module.exports = claudioGodoyScraperInstance;

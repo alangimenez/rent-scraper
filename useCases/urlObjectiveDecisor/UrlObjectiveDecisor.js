@@ -455,6 +455,42 @@ class UrlObjectiveDecisor {
                     }
                 ]
                 break
+            case `${RealStates.ClaudioGodoy.id}-${PropertyType.House}-${Operations.Rent}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.claudiogodoy.com.ar/Buscar?operation=2&ptypes=3&locations=26326&o=2,2&1=1"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.claudiogodoy.com.ar/Buscar?operation=2&ptypes=3&locations=25983&o=2,2&1=1"
+                    }
+                ]
+                break
+            case `${RealStates.ClaudioGodoy.id}-${PropertyType.House}-${Operations.Sale}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.claudiogodoy.com.ar/Buscar?operation=1&ptypes=3&locations=26315&min-price=&max-price=120000&currency=USD&o=2,2&1=1"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.claudiogodoy.com.ar/Buscar?operation=1&ptypes=3&locations=25983&min-price=&max-price=120000&currency=USD&o=2,2&1=1"
+                    }
+                ]
+                break
+            case `${RealStates.Argenprop.id}-${PropertyType.House}-${Operations.Sale}`:
+                urlObjective = [
+                    {
+                        id: Cities.Moron,
+                        url: "https://www.argenprop.com/casas/venta/moron/dolares-hasta-120000?pagina-"
+                    },
+                    {
+                        id: Cities.Ituzaingo,
+                        url: "https://www.argenprop.com/casas/venta/ituzaingo/dolares-hasta-120000?pagina-"
+                    }
+                ]
+                break
             default:
                 throw new Error(`urlObjective not implemented for real state ${realState}, operation ${operation}, property type ${propertyType}`)
         }

@@ -1,3 +1,5 @@
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
+
 class RemaxScraper {
     constructor() { }
 
@@ -15,7 +17,7 @@ class RemaxScraper {
             let json = await response.json(); // Convertir la respuesta a JSON
             result = json.data.data
         } catch (e) {
-            console.error('Error en la API call:', error);
+            loggerProcessor.error('Error en la API call:', error);
         }
 
         result.forEach(property => {

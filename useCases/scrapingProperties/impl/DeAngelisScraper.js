@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class NerinaAlloScraper {
     constructor() { }
@@ -56,8 +57,8 @@ class NerinaAlloScraper {
         try {
             latestProperties = await extractListings()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja final`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja final`)
+            loggerProcessor.error(error.message)
             latestProperties = []
         }
 
@@ -81,7 +82,7 @@ class NerinaAlloScraper {
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
 
         const page = await browser.newPage();
 
@@ -123,8 +124,8 @@ class NerinaAlloScraper {
         try {
             data = await extractListings()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             data = []
         }
 
@@ -134,7 +135,7 @@ class NerinaAlloScraper {
             e.price = unformattedPrice
         })
 
-        console.log(`Se obtuvieron ${data.length} nuevas propiedades`)
+        loggerProcessor.debug(`Se obtuvieron ${data.length} nuevas propiedades`)
 
         return data
     }

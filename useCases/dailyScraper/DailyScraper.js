@@ -4,17 +4,18 @@ const SaveProperties = require('../saveNewProperties/SaveNewProperties')
 const PropertyDecorator = require('../propertyDecorator/PropertyDecorator')
 const CasesForScraping = require('../../enums/CasesForScraping')
 const SaveRegister = require('../saveRegister/SaveRegister')
+const LoggerProcessor = require('../loggerProcessor/LoggerProcessor')
 
 class DailyScraper {
-    constructor() {}
+    constructor() { }
 
     async handlePropertyProcess(realState, propertyType, operation) {
         const allProperties = await ScrapingProperties.scrapeProperties(realState, propertyType, operation)
-        console.log(`Scraped ${allProperties.length} properties`)
+        LoggerProcessor.debug(`Scraped ${allProperties.length} properties`)
         const newProperties = await CompareProperties.compare(allProperties, operation)
-        console.log(`Found ${newProperties.length} new properties`)
+        LoggerProcessor.debug(`Found ${newProperties.length} new properties`)
         const decoratedProperties = PropertyDecorator.decorate(newProperties, realState, operation, propertyType)
-        console.log(`Decorated ${decoratedProperties.length} properties`)
+        LoggerProcessor.debug(`Decorated ${decoratedProperties.length} properties`)
         await SaveProperties.saveProperties(decoratedProperties)
         return {
             addedProperties: decoratedProperties.length
@@ -26,11 +27,11 @@ class DailyScraper {
             try {
                 const quantityAddedProperties = await this.handlePropertyProcess(e.realState, e.propertyType, e.operation)
                 await SaveRegister.saveProcessResult(e, quantityAddedProperties, "OK")
-                console.log(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK, added: ${quantityAddedProperties.addedProperties}`)
-            } catch (error) {
-                console.log(error.message)
+                LoggerProcessor.info(`\x1b[35mReal state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status OK, added: ${quantityAddedProperties.addedProperties}\x1b[0m`)
+            } catch (err) {
+                LoggerProcessor.error(err.message)
                 await SaveRegister.saveProcessResult(e, { addedProperties: 0 }, "ERROR")
-                console.log(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status ERROR`)
+                LoggerProcessor.error(`Real state: ${e.realState.id}, propertyType: ${e.propertyType}, operation: ${e.operation}, status ERROR`)
             }
         }
 

@@ -56,5 +56,9 @@ module.exports = {
     Zonaprop: {
         id: "Zonaprop",
         sourceType: Source.Portal
-    }
+    },
+    ClaudioGodoy: {
+        id: "ClaudioGodoy",
+        sourceType: Source.RealState
+    },
 }

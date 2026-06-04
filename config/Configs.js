@@ -10,5 +10,6 @@ module.exports = {
     NODE_ENV: process.env.NODE_ENV || 'development',
     MONGODB_URI: process.env.MONGODB_URI || '127.0.0.1',
     PORT: process.env.PORT || 3001,
-    DEBUG_MODE: process.env.DEBUG_MODE || false
+    DEBUG_MODE: process.env.DEBUG_MODE || false,
+    LOG_LEVEL: process.env.LOG_LEVEL || 0
 }

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class ICarlucciScraper {
     constructor() {}
@@ -40,8 +41,8 @@ class ICarlucciScraper {
         try {
             result = await extracResult()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping para obtener la cantidad de hojas`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping para obtener la cantidad de hojas`)
+            loggerProcessor.error(error.message)
             result = 1
         }
     
@@ -61,7 +62,7 @@ class ICarlucciScraper {
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
 
         const page = await browser.newPage();
     
@@ -113,12 +114,12 @@ class ICarlucciScraper {
         try {
             dataList = await extractListing()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             dataList = []
         }
 
-        console.log(`Se obtuvieron ${dataList.length} nuevas propiedades`)
+        loggerProcessor.debug(`Se obtuvieron ${dataList.length} nuevas propiedades`)
     
         return dataList
     }

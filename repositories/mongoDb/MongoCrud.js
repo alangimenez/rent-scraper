@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const config = require('../../config/Configs');
+const loggerProcessor = require('../../useCases/loggerProcessor/LoggerProcessor');
 
 (async () => {
     try {
         await mongoose.connect(config.MONGODB_URI);
-        console.log('database connected')
+        loggerProcessor.info('database connected')
     } catch (e) {
-        console.log('database not connected. Error: ' + e)
+        loggerProcessor.error('database not connected. Error: ' + e)
     }
 })();
 
@@ -21,7 +22,7 @@ class CrudMongo {
         try {
             return await this.model.find({}, { __v: 0 });
         } catch (e) {
-            console.log('cant getAll')
+            loggerProcessor.error('cant getAll')
         }
     }
 
@@ -29,8 +30,8 @@ class CrudMongo {
         try {
             return await this.model.create(element);
         } catch (e) {
-            console.log(`Can't upload element: ${element.id}`)
-            console.log(element)
+            loggerProcessor.error(`Can't upload element: ${element.id}`)
+            loggerProcessor.error(element)
         }
     }
 
@@ -38,7 +39,7 @@ class CrudMongo {
         try {
             return await this.model.deleteOne({ bondName: bondName });
         } catch (e) {
-            console.log('cant delete element')
+            loggerProcessor.error('cant delete element')
         }
     }
 }

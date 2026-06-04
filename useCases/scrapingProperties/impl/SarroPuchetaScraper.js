@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { navigateWithRetry } = require('../NavigationWithRetry')
+const loggerProcessor = require('../../loggerProcessor/LoggerProcessor')
 
 class SarroPuchetaScraper {
     constructor() { }
@@ -24,7 +25,7 @@ class SarroPuchetaScraper {
     }
 
     async #scrapeDynamicWebsite(pageId, browser, urlObjective) {
-        console.log(`Analizando pagina ${pageId}`)
+        loggerProcessor.debug(`Analizando pagina ${pageId}`)
 
         const page = await browser.newPage();
 
@@ -108,18 +109,18 @@ class SarroPuchetaScraper {
         try {
             dataList = await extractData()
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping sobre la hoja ${pageId}`)
+            loggerProcessor.error(error.message)
             dataList = []
         }
 
-        console.log(`Se obtuvieron ${dataList.length} nuevas propiedades`)
+        loggerProcessor.debug(`Se obtuvieron ${dataList.length} nuevas propiedades`)
 
         return dataList
     }
 
     async #getNumberOfPagesForScraping(browser, url) {
-        console.log(`Se inicia obtención del ultimo valor`)
+        loggerProcessor.debug(`Se inicia obtención del ultimo valor`)
 
         const page = await browser.newPage();
 
@@ -150,12 +151,12 @@ class SarroPuchetaScraper {
         try {
             anteultimoValor = await getAnteultimoValor();
         } catch (e) {
-            console.log(`Hubo un error haciendo scraping para obtener el ultimo valor`)
-            console.log(error.message)
+            loggerProcessor.error(`Hubo un error haciendo scraping para obtener el ultimo valor`)
+            loggerProcessor.error(error.message)
             anteultimoValor = 1
         }
 
-        console.log(`Se obtuvo el ultimo valor`)
+        loggerProcessor.debug(`Se obtuvo el ultimo valor`)
 
         return anteultimoValor
     }
