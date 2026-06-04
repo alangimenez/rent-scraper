@@ -1,29 +1,41 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const RetrieveProperties = require('../useCases/retrieveProperties/RetrieveProperties')
-const BaseController = require('./BaseController')
 
-router.get('/', async (req, res) => {
+const VALID_PAGE_SIZES = [15, 30, 50]
+
+router.get('/filterOptions', async (req, res) => {
     try {
-        const createdDate = BaseController.retrieveDate(req)
-
-        const result = await RetrieveProperties.retrievePropertiesByCreatedDate(createdDate);
+        const result = await RetrieveProperties.getFilterOptions()
         res.status(200).json(result)
     } catch (e) {
-        res.status(500).json(e.message)
+        res.status(500).json({ error: e.message })
     }
 })
 
-router.get('/filteredByPricePropertyType', async (req, res) => {
+router.get('/search', async (req, res) => {
     try {
-        const lowerPrice = BaseController.retrieveLowerPrice(req)
-        const upperPrice = BaseController.retrieveUpperPrice(req)
-        const propertyType = BaseController.retrievePropertyType(req)
+        const { source, realState, operation, dateFrom, dateTo, city, currency, minPrice, maxPrice } = req.query
 
-        const result = await RetrieveProperties.retrieveByPrice(lowerPrice, upperPrice, propertyType);
+        const page = Math.max(1, parseInt(req.query.page) || 1)
+        const requestedSize = parseInt(req.query.pageSize) || 15
+        const pageSize = VALID_PAGE_SIZES.includes(requestedSize) ? requestedSize : 15
+
+        const filters = {}
+        if (source)    filters.source = source
+        if (realState) filters.realState = realState
+        if (operation) filters.operation = operation
+        if (dateFrom)  filters.dateFrom = dateFrom
+        if (dateTo)    filters.dateTo = dateTo
+        if (city)      filters.city = city
+        if (currency)  filters.currency = currency
+        if (minPrice)  filters.minPrice = minPrice
+        if (maxPrice)  filters.maxPrice = maxPrice
+
+        const result = await RetrieveProperties.searchProperties(filters, page, pageSize)
         res.status(200).json(result)
     } catch (e) {
-        res.status(500).json(e.message)
+        res.status(500).json({ error: e.message })
     }
 })
 
