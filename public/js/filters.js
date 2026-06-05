@@ -9,28 +9,31 @@
 function readFilters() {
     const filters = {};
 
-    const source    = document.getElementById('source').value;
+    const source = document.getElementById('source').value;
     const realState = document.getElementById('realState').value;
     const operation = document.getElementById('operation').value;
-    const dateFrom  = document.getElementById('dateFrom').value;
-    const dateTo    = document.getElementById('dateTo').value;
-    const city      = document.getElementById('city').value;
-    const currency  = document.getElementById('currency').value;
-    const minPrice  = document.getElementById('minPrice').value;
-    const maxPrice  = document.getElementById('maxPrice').value;
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+    const city = document.getElementById('city').value;
+    const currency = document.getElementById('currency').value;
+    const minPrice = document.getElementById('minPrice').value;
+    const maxPrice = document.getElementById('maxPrice').value;
 
-    if (source)    filters.source = source;
+    if (source) filters.source = source;
     if (realState && source === 'RealState') filters.realState = realState;
     if (operation) filters.operation = operation;
-    if (city)      filters.city = city;
-    if (currency)  filters.currency = currency;
+    if (city) filters.city = city;
+    if (currency) filters.currency = currency;
 
+    // Se agrega el offset de Argentina (UTC-3) para que el filtro corresponda al día local
     if (dateFrom) filters.dateFrom = dateFrom + 'T00:00:00-03:00';
-    // Si dateTo es el mismo día que dateFrom o cualquier día, lo ajustamos al fin del día
-    if (dateTo)   filters.dateTo = dateTo + 'T23:59:59.999-03:00';
+    if (dateTo) filters.dateTo = dateTo + 'T23:59:59.999-03:00';
 
     if (minPrice) filters.minPrice = minPrice;
     if (maxPrice) filters.maxPrice = maxPrice;
+
+    const sortBy = document.getElementById('sort-by').value;
+    if (sortBy) filters.sortBy = sortBy;
 
     return filters;
 }
@@ -88,13 +91,13 @@ function _populateSelect(id, values) {
  * - Muestra/oculta la advertencia de precio sin moneda.
  */
 function initFilterBehavior() {
-    const sourceSelect    = document.getElementById('source');
+    const sourceSelect = document.getElementById('source');
     const realStateSelect = document.getElementById('realState');
-    const realstateHint   = document.getElementById('realstate-hint');
-    const priceWarning    = document.getElementById('price-warning');
-    const minPriceInput   = document.getElementById('minPrice');
-    const maxPriceInput   = document.getElementById('maxPrice');
-    const currencySelect  = document.getElementById('currency');
+    const realstateHint = document.getElementById('realstate-hint');
+    const priceWarning = document.getElementById('price-warning');
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+    const currencySelect = document.getElementById('currency');
 
     function updateRealStateSelector() {
         const isRealState = sourceSelect.value === 'RealState';

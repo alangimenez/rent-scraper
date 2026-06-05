@@ -345,6 +345,13 @@ body {
   font-weight: 600;
 }
 
+.results-bar-controls {
+ display: flex;
+ align-items: center;
+ gap: 16px;
+ flex-wrap: wrap;
+}
+
 .page-size-selector {
   display: flex;
   align-items: center;

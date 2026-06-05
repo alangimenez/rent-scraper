@@ -56,12 +56,18 @@ function initEventListeners() {
 
     // Toggle de filtros (mobile)
     document.getElementById('filters-toggle').addEventListener('click', () => {
-        const form    = document.getElementById('filters-form');
-        const btn     = document.getElementById('filters-toggle');
-        const isOpen  = !form.classList.contains('collapsed');
+        const form = document.getElementById('filters-form');
+        const btn = document.getElementById('filters-toggle');
+        const isOpen = !form.classList.contains('collapsed');
         form.classList.toggle('collapsed', isOpen);
         btn.querySelector('span').textContent = isOpen ? 'Mostrar' : 'Ocultar';
         btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // Selector de orden
+    document.getElementById('sort-by').addEventListener('change', () => {
+        appState.currentPage = 1;
+        search();
     });
 
     // Selector de cantidad por página
