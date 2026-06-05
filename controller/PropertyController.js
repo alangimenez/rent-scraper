@@ -15,7 +15,7 @@ router.get('/filterOptions', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     try {
-        const { source, realState, operation, dateFrom, dateTo, city, currency, minPrice, maxPrice } = req.query
+        const { source, realState, operation, dateFrom, dateTo, city, currency, minPrice, maxPrice, sortBy } = req.query
 
         const page = Math.max(1, parseInt(req.query.page) || 1)
         const requestedSize = parseInt(req.query.pageSize) || 15
@@ -31,6 +31,7 @@ router.get('/search', async (req, res) => {
         if (currency)  filters.currency = currency
         if (minPrice)  filters.minPrice = minPrice
         if (maxPrice)  filters.maxPrice = maxPrice
+        if (sortBy)    filters.sortBy = sortBy
 
         const result = await RetrieveProperties.searchProperties(filters, page, pageSize)
         res.status(200).json(result)

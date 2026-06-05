@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rent Scraper</title>
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
+
 <body>
 
   <header class="header">
@@ -107,7 +109,8 @@
       <div class="state-view" id="state-idle">
         <div class="state-icon">🔍</div>
         <h3 class="state-title">Buscá anuncios</h3>
-        <p class="state-message">Usá los filtros de la izquierda y hacé clic en <strong>Buscar</strong> para ver los anuncios guardados.</p>
+        <p class="state-message">Usá los filtros de la izquierda y hacé clic en <strong>Buscar</strong> para ver los
+          anuncios guardados.</p>
       </div>
 
       <!-- Estado: loading -->
@@ -121,7 +124,8 @@
       <div class="state-view hidden" id="state-retrying">
         <div class="spinner"></div>
         <h3 class="state-title">Servidor iniciando</h3>
-        <p class="state-message">El servidor estaba dormido y se está despertando.<br>Esto puede demorar hasta 1 minuto.</p>
+        <p class="state-message">El servidor estaba dormido y se está despertando.<br>Esto puede demorar hasta 1 minuto.
+        </p>
         <p class="retry-info" id="retry-info"></p>
       </div>
 
@@ -145,13 +149,24 @@
 
         <div class="results-bar">
           <span class="results-count" id="results-count"></span>
-          <div class="page-size-selector">
-            <label for="page-size">Por página:</label>
-            <select id="page-size">
-              <option value="15">15</option>
-              <option value="30">30</option>
-              <option value="50">50</option>
-            </select>
+          <div class="results-bar-controls">
+            <div class="page-size-selector">
+              <label for="sort-by">Ordenar por:</label>
+              <select id="sort-by">
+                <option value="createdDate_desc">Más nuevos primero</option>
+                <option value="createdDate_asc">Más viejos primero</option>
+                <option value="price_asc">Precio: menor a mayor</option>
+                <option value="price_desc">Precio: mayor a menor</option>
+              </select>
+            </div>
+            <div class="page-size-selector">
+              <label for="page-size">Por página:</label>
+              <select id="page-size">
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -199,4 +214,5 @@
   <script src="/js/ui.js"></script>
   <script src="/js/app.js"></script>
 </body>
+
 </html>
