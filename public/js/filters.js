@@ -25,9 +25,9 @@ function readFilters() {
     if (city)      filters.city = city;
     if (currency)  filters.currency = currency;
 
-    if (dateFrom) filters.dateFrom = dateFrom;
+    if (dateFrom) filters.dateFrom = dateFrom + 'T00:00:00-03:00';
     // Si dateTo es el mismo día que dateFrom o cualquier día, lo ajustamos al fin del día
-    if (dateTo)   filters.dateTo = dateTo + 'T23:59:59.999Z';
+    if (dateTo)   filters.dateTo = dateTo + 'T23:59:59.999-03:00';
 
     if (minPrice) filters.minPrice = minPrice;
     if (maxPrice) filters.maxPrice = maxPrice;
