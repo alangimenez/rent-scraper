@@ -25,13 +25,13 @@ module.exports = [
     new ScrapingCase(RealStates.DeAngelis, Operations.Sale, PropertyType.House),
     new ScrapingCase(RealStates.SarroPucheta, Operations.Sale, PropertyType.House),
     new ScrapingCase(RealStates.Properati, Operations.Sale, PropertyType.House),
-    new ScrapingCase(RealStates.MercadoLibre, Operations.Sale, PropertyType.House),
-    new ScrapingCase(RealStates.Zonaprop, Operations.Sale, PropertyType.House),
+    // new ScrapingCase(RealStates.MercadoLibre, Operations.Sale, PropertyType.House),
+    // new ScrapingCase(RealStates.Zonaprop, Operations.Sale, PropertyType.House),
     new ScrapingCase(RealStates.ClaudioGodoy, Operations.Sale, PropertyType.House),
     new ScrapingCase(RealStates.Argenprop, Operations.Sale, PropertyType.House),
 
     // ALQUILER CASA
-    new ScrapingCase(RealStates.ICarlucci, Operations.Rent, PropertyType.House),
+    /* new ScrapingCase(RealStates.ICarlucci, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.NerinaAllo, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.VeronicaEspinosa, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.MarceloMilano, Operations.Rent, PropertyType.House),
@@ -45,5 +45,5 @@ module.exports = [
     new ScrapingCase(RealStates.Argencasas, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.Zonaprop, Operations.Rent, PropertyType.House),
     new ScrapingCase(RealStates.MercadoLibre, Operations.Rent, PropertyType.House),
-    new ScrapingCase(RealStates.ClaudioGodoy, Operations.Rent, PropertyType.House),
+    new ScrapingCase(RealStates.ClaudioGodoy, Operations.Rent, PropertyType.House), */
 ]

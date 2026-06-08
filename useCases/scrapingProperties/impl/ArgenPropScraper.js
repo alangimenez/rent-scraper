@@ -44,22 +44,22 @@ class SarroPuchetaScraper {
             return await page.evaluate(() => {
                 const container = document.querySelector('.listing__items');
                 if (!container) return [];
-    
+
                 return Array.from(container.children).map(listing => {
                     const id = listing.id || null;
-    
+
                     const pictureSrc = listing.querySelector('a .card__photos-box .card__carousel.simple-carousel .card__photos li:first-child img')?.src || null;
-                    
+
                     const title = listing.querySelector('a .card__details-box h2')?.textContent.trim() || null;
-    
+
                     const address = listing.querySelector('a .card__details-box .card__details-box-top .card__monetary-values .card__address')?.textContent.trim() || null;
-    
+
                     const price = listing.querySelector('a .card__details-box .card__details-box-top .card__monetary-values .card__price')?.textContent.trim() || null;
-    
+
                     const url = listing.querySelector('a')?.href || null;
 
                     const realState = listing.querySelector('a .card__details-box .card__details-box-top .card__agent img')?.alt || null;
-    
+
                     return { id, pictureSrc, title, address, price, url, realState };
                 });
             });
@@ -86,8 +86,13 @@ class SarroPuchetaScraper {
         // Configurar User-Agent para evitar bloqueos
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
 
+        page.on('console', msg => {
+            if (msg.text().includes("DEBUG")) console.log('LOG del navegador: ', msg.text());
+        });
+
         // Navegar a la página objetivo
         await navigateWithRetry(page, `${url}1`, 3)
+        LoggerProcessor.debug(`Se navego a la pagina ${url}1 para obtener el ultimo valor`)
         // await page.goto(`${url}`, { waitUntil: 'domcontentloaded' });
 
         // Función para obtener el valor del anteúltimo <li>
@@ -95,14 +100,17 @@ class SarroPuchetaScraper {
             return await page.evaluate(() => {
                 const paginationDiv = document.querySelector('.pagination.pagination--links');
                 if (!paginationDiv) return null; // Si no existe la paginación, retornar null
-    
+
                 const pageItems = paginationDiv.querySelectorAll('li.pagination__page');
                 if (pageItems.length === 0) return null; // Si no hay elementos <li>, retornar null
-    
+
+                // console.log('DEBUG - pageItems', pageItems.textContent)
+
                 const lastPage = pageItems[pageItems.length - 2]; // Anteúltimo <li>
-                const lastLink = lastPage.querySelector('a'); // Etiqueta <a> dentro del <li>
-                
-                return lastLink ? lastLink.textContent.trim() : null;
+
+                // console.log('DEBUG - lastPage', lastPage.textContent)
+
+                return lastPage ? lastPage.textContent.trim() : null;
             });
         };
 
@@ -112,11 +120,11 @@ class SarroPuchetaScraper {
             lastPage = await getLastPage();
         } catch (e) {
             LoggerProcessor.error(`Hubo un error haciendo scraping para obtener el ultimo valor`)
-            LoggerProcessor.error(error.message)
+            LoggerProcessor.error(e.message)
             lastPage = 1
         }
 
-        LoggerProcessor.debug(`Se obtuvo el ultimo valor`)
+        LoggerProcessor.debug(`Se obtuvo el ultimo valor: ${lastPage}`)
 
         return lastPage
     }
